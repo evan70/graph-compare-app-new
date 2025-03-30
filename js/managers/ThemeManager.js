@@ -2,6 +2,26 @@ class ThemeManager {
     constructor() {
         this.themeToggle = document.getElementById('theme-toggle');
         this.currentTheme = 'light';
+        this.themeColors = {
+            light: {
+                text: '#666666',
+                grid: '#dddddd',
+                background: '#ffffff',
+                border: '#e5e5e5',
+                shadow: 'rgba(0, 0, 0, 0.1)',
+                hover: 'rgba(78, 115, 223, 0.1)',
+                muted: '#858796'
+            },
+            dark: {
+                text: '#e2e5ec',
+                grid: '#2d3139',
+                background: '#1a1d24',
+                border: '#2d3139',
+                shadow: 'rgba(0, 0, 0, 0.3)',
+                hover: 'rgba(78, 115, 223, 0.2)',
+                muted: '#858796'
+            }
+        };
         this.initTheme();
         this.initThemeToggle();
     }
@@ -43,24 +63,18 @@ class ThemeManager {
     applyTheme(isDark) {
         this.currentTheme = isDark ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', this.currentTheme);
+        
+        // Aplikujeme CSS premenné
+        const colors = this.getThemeColors(this.currentTheme);
+        Object.entries(colors).forEach(([key, value]) => {
+            document.documentElement.style.setProperty(`--${key}-color`, value);
+        });
+        
         localStorage.setItem('theme', this.currentTheme);
-        return this.getThemeColors(this.currentTheme);
+        return colors;
     }
 
     getThemeColors(theme) {
-        switch(theme) {
-            case 'dark':
-                return {
-                    text: '#e2e5ec',
-                    grid: '#2d3139',
-                    background: '#1a1d24'
-                };
-            default:
-                return {
-                    text: '#666666',
-                    grid: '#dddddd',
-                    background: '#ffffff'
-                };
-        }
+        return this.themeColors[theme] || this.themeColors.light;
     }
 }

@@ -1,5 +1,31 @@
 # Zoznam zmien
 
+## [0.1.1] - 2024-01-24
+
+### Pridané
+- Implementovaná centrálna `App` trieda pre lepšiu organizáciu kódu
+  - Centralizovaná správa všetkých manažérov
+  - Systém subscriptions pre lepšiu komunikáciu medzi komponentmi
+  - Globálne event listenery
+  - Vylepšená inicializačná logika
+- Rozšírené farebné schémy pre dark mode
+  - Nové CSS premenné pre konzistentný vzhľad
+  - Vylepšené tieňovanie a prechody
+  - Optimalizácia pre mobilné zariadenia
+
+### Zmenené
+- Refaktoring architektúry aplikácie
+  - Presun inicializačnej logiky do `App` triedy
+  - Vylepšená organizácia závislostí medzi komponentmi
+- Vylepšený dark mode
+  - Nová implementácia v `ThemeManager`
+  - Konzistentnejšie používanie CSS premenných
+  - Lepšia podpora pre všetky komponenty
+
+### Opravené
+- Konzistentnejšie správanie dark mode naprieč aplikáciou
+- Lepšie prepojenie medzi manažérmi a komponentmi
+
 ## [Nepublikované]
 
 ### Pridané

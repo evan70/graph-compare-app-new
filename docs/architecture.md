@@ -1,7 +1,7 @@
 # Architektúra aplikácie
-Posledná aktualizácia: 2024-01-23
+Posledná aktualizácia: 2024-01-24
 
-## Štruktúra priečinkov
+## Hlavná aplikačná trieda (App)
 ```
 grafy-2024-new/
 ├── js/

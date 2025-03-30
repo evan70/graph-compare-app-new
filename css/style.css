@@ -919,3 +919,68 @@ body {
         right: 8px;
     }
 }
+
+:root {
+    /* Základné farby */
+    --text-color: #666666;
+    --grid-color: #dddddd;
+    --background-color: #ffffff;
+    --border-color: #e5e5e5;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --hover-color: rgba(78, 115, 223, 0.1);
+    --muted-color: #858796;
+
+    /* Komponenty */
+    --card-bg: var(--background-color);
+    --card-border: var(--border-color);
+    --card-shadow: 0 2px 4px var(--shadow-color);
+    
+    /* Animácie */
+    --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+    --text-color: #e2e5ec;
+    --grid-color: #2d3139;
+    --background-color: #1a1d24;
+    --border-color: #2d3139;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --hover-color: rgba(78, 115, 223, 0.2);
+    --muted-color: #858796;
+}
+
+/* Vylepšenie dark mode pre komponenty */
+[data-theme="dark"] .chart-box {
+    background: linear-gradient(
+        to bottom,
+        rgba(45, 49, 57, 0.3),
+        rgba(26, 29, 36, 0.3)
+    );
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+[data-theme="dark"] .nav-menu {
+    background-color: var(--background-color);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] #data-table th {
+    background: linear-gradient(
+        to right,
+        rgba(78, 115, 223, 0.15),
+        rgba(78, 115, 223, 0.05)
+    );
+}
+
+[data-theme="dark"] #data-table tr:hover {
+    background-color: var(--hover-color);
+}
+
+/* Vylepšenie mobile dark mode */
+@media (max-width: 768px) {
+    [data-theme="dark"] .nav-menu {
+        background-color: rgba(26, 29, 36, 0.95);
+        backdrop-filter: blur(10px);
+    }
+}
