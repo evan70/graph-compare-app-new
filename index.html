@@ -94,6 +94,7 @@
         </div>
 
         <div class="charts-container">
+            <!-- Existujúce grafy -->
             <div class="chart-box">
                 <div class="chart-header">
                     <h2>Chart.js Graf</h2>
@@ -111,6 +112,35 @@
                     </button>
                 </div>
                 <div id="apex"></div>
+            </div>
+
+            <!-- Nová tabuľka pre dáta -->
+            <div class="data-table-container">
+                <div class="table-header">
+                    <h2>Data Editor</h2>
+                    <div class="table-actions">
+                        <button id="addDatasetBtn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Dataset
+                        </button>
+                        <button id="addColumnBtn" class="btn btn-secondary">
+                            <i class="fas fa-columns"></i> Add Column
+                        </button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="dataTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Dataset</th>
+                                <th>Color</th>
+                                <!-- Labels budú dynamicky generované -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dáta budú dynamicky generované -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -134,6 +164,7 @@
     <script src="js/managers/NavigationManager.js"></script>
     <script src="js/managers/FullscreenManager.js"></script>
     <script src="js/managers/SettingsManager.js"></script>  <!-- Pridaný SettingsManager -->
+    <script src="js/managers/TableManager.js"></script>
 
     <!-- Wrappery -->
     <script src="js/charts/ChartJSWrapper.js"></script>

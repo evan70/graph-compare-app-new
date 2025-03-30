@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.5] - 2024-01-24
+
+### Zmenené
+- Odstránené inline CSS štýly z index.html
+  - Všetky štýly presunuté do css/style.css
+  - Vyčistený HTML kód
+  - Lepšia organizácia CSS
+
+### Opravené
+- Odstránená duplicita CSS definícií
+- Zjednotené štýlovanie v celej aplikácii
+
 ## [0.1.4] - 2024-01-24
 
 ### Opravené

@@ -15,10 +15,18 @@ grafy-2024-new/
 │   │   ├── FullscreenManager.js
 │   │   └── NavigationManager.js
 │   └── main.js         # Hlavný aplikačný súbor
-├── css/
+├── css/                # CSS súbory
+│   ├── style.css      # Hlavný CSS súbor
+│   ├── charts.css     # Štýly pre grafy
+│   └── theme.css      # Definície tém
 ├── assets/
-└── index.html
-```
+└── index.html         # Čistý HTML bez inline štýlov
+
+## Štýlovanie
+- Všetky štýly sú definované v CSS súboroch
+- Žiadne inline štýly v HTML
+- Konzistentné používanie CSS premenných
+- Modularita a znovupoužiteľnosť CSS
 
 ## Manažérska vrstva
 - Centralizovaná logika v samostatných Manager triedach

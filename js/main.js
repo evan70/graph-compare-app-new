@@ -35,6 +35,9 @@ const ChartManager = (function() {
                 this.colorManager.setPalette(e.target.value);
             });
         }
+
+        // Po inicializácii ostatných manažérov
+        const tableManager = new TableManager(this.dataManager);
     }
 
     return ChartManager;

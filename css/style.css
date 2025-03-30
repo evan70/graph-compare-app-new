@@ -359,3 +359,61 @@ body.fullscreen-active {
         padding: 10px;
     }
 }
+
+/* Vizuálne nastavenia */
+.visual-settings {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    background: var(--bg-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+.settings-group {
+    display: flex;
+    align-items: center;
+}
+
+.switch-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    background: #ccc;
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+
+.switch::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    top: 1px;
+    left: 1px;
+    transition: all 0.3s;
+}
+
+input:checked + .switch {
+    background: var(--primary-color);
+}
+
+input:checked + .switch::after {
+    transform: translateX(20px);
+}
+
+input[type="checkbox"] {
+    display: none;
+}

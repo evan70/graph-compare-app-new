@@ -11,10 +11,17 @@ Moderná webová aplikácia pre vizualizáciu dát pomocou Chart.js a ApexCharts
 - Mobilná optimalizácia
 - Vlastné farebné palety
 - Moderná navigácia
+- Čistá a modulárna štruktúra kódu
 
 ## Aktuálny stav
-- Verzia: 0.1.0 (2024-01-23)
+- Verzia: 0.1.5 (2024-01-24)
 - Status: Vo vývoji
+
+## Štruktúra projektu
+- `/css` - Všetky štýly aplikácie
+- `/js` - JavaScript kód a manažéri
+- `/assets` - Obrázky a iné statické súbory
+- `/docs` - Dokumentácia
 
 ## TODO
 ### [1] Export/Import nastavení
