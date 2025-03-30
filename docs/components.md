@@ -39,6 +39,23 @@ Správca tém (svetlá/tmavá).
 - `applyTheme(isDark)` - Aplikuje tému a vráti príslušné farby
 - `getThemeColors(theme)` - Vráti farebné nastavenia pre danú tému
 
+### FullscreenManager
+Správca fullscreen módu pre grafy.
+
+#### Vlastnosti
+- `fullscreenOverlay` - Referencia na overlay element
+- `fullscreenContainer` - Container pre fullscreen obsah
+- `fullscreenChart` - Aktívny fullscreen graf
+- `themeManager` - Referencia na ThemeManager pre správu tém
+
+#### Metódy
+- `openFullscreen(grafType)` - Otvorí graf v fullscreen móde
+- `closeFullscreen()` - Zatvorí fullscreen mód
+- `isFullscreenActive()` - Kontrola aktívneho fullscreen stavu
+- `activateFullscreen()` - Aktivuje fullscreen mód
+- `getChartJSConfig()` - Získa konfiguráciu pre ChartJS
+- `getApexConfig()` - Získa konfiguráciu pre ApexCharts
+
 ## Wrappery pre grafy
 
 ### ChartJSWrapper

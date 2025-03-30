@@ -1,5 +1,35 @@
 # Zoznam zmien
 
+## [Nepublikované]
+
+### Pridané
+- Implementovaný `FullscreenManager` pre lepšiu správu fullscreen módu
+  - Centralizovaná logika pre fullscreen funkcionalitu
+  - Podpora pre ChartJS aj ApexCharts
+  - Lepšia integrácia s ThemeManager
+  - Automatická adaptácia na aktuálnu tému
+- Vylepšené ovládanie fullscreen módu
+  - ESC klávesa pre zatvorenie
+  - Lepšia responzivita v fullscreen móde
+  - Zachovanie nastavení grafu pri prepnutí do fullscreen
+- Nové metódy pre prácu s fullscreen
+  - `openFullscreen()`
+  - `closeFullscreen()`
+  - `isFullscreenActive()`
+  - `activateFullscreen()`
+- Lepšia dokumentácia fullscreen funkcionality
+
+### Zmenené
+- Refaktoring fullscreen logiky do samostatného manažéra
+- Vylepšená architektúra aplikácie s novým manažérom
+- Optimalizovaná integrácia medzi manažérmi
+- Presun fullscreen konfigurácie do samostatných metód
+
+### Opravené
+- Lepšie ošetrenie stavov pri prepínaní fullscreen módu
+- Konzistentnejšie správanie pri zmene témy vo fullscreen móde
+- Správne čistenie resources pri zatvorení fullscreen módu
+
 ## [2024-01-22]
 
 ### Pridané
