@@ -1,5 +1,23 @@
 # Zoznam zmien
 
+## [0.1.2] - 2024-01-24
+
+### Opravené
+- Opravená inicializácia ApexCharts
+  - Pridaná kompletná počiatočná konfigurácia
+  - Odstránená chyba "t is undefined"
+  - Správne načítanie počiatočných dát
+- Zjednotené farby medzi Chart.js a ApexCharts
+  - Implementovaná konzistentná farebná schéma
+  - Správne použitie farieb z DataManager
+  - Aktualizácia farieb pri zmene dát
+
+### Zmenené
+- Vylepšená implementácia ApexChartsWrapper
+  - Lepšia integrácia s DataManager
+  - Optimalizovaná aktualizácia dát a farieb
+  - Pridaná podpora pre dynamickú zmenu farieb
+
 ## [0.1.1] - 2024-01-24
 
 ### Pridané
