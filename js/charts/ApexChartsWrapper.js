@@ -11,72 +11,24 @@ class ApexChartsWrapper {
     }
 
     init() {
-        this.chart = new ApexCharts(
-            this.container, 
-            this.getInitialConfig()
-        );
-        this.chart.render();
-    }
-
-    getInitialConfig() {
         const data = this.dataManager.getCurrentData();
         const colors = this.dataManager.getColors();
         const isDark = this.themeManager.getCurrentTheme() === 'dark';
 
-        return {
-            chart: {
-                type: 'line',
-                height: '100%',
-                background: 'transparent',
-                toolbar: {
-                    show: false
-                },
-                zoom: {
-                    enabled: false
-                }
-            },
+        const config = {
             series: data.datasets.map(dataset => ({
                 name: dataset.label,
                 data: dataset.data
             })),
-            colors: colors,
+            colors: colors, // Pridané farby z DataManager
+            chart: {
+                type: 'line',
+                height: 350,
+                background: isDark ? '#1a1d24' : '#ffffff',
+                foreColor: isDark ? '#e2e5ec' : '#666666'
+            },
             xaxis: {
-                categories: data.labels,
-                labels: {
-                    style: {
-                        colors: isDark ? '#e2e5ec' : '#666'
-                    }
-                }
-            },
-            yaxis: {
-                labels: {
-                    style: {
-                        colors: isDark ? '#e2e5ec' : '#666'
-                    }
-                }
-            },
-            stroke: {
-                curve: this.options.useSmoothing ? 'smooth' : 'straight',
-                width: 2
-            },
-            fill: {
-                type: this.options.useGradient ? 'gradient' : 'solid',
-                gradient: {
-                    shade: 'light',
-                    type: 'vertical',
-                    shadeIntensity: 0.5,
-                    opacityFrom: 0.25,
-                    opacityTo: 0,
-                    stops: [0, 100]
-                }
-            },
-            markers: {
-                size: 4,
-                strokeColors: '#fff',
-                strokeWidth: 2,
-                hover: {
-                    size: 6
-                }
+                categories: data.labels
             },
             grid: {
                 borderColor: isDark ? '#2d3139' : '#ddd',
@@ -88,24 +40,44 @@ class ApexChartsWrapper {
             legend: {
                 position: 'bottom',
                 horizontalAlign: 'center'
+            },
+            stroke: {
+                curve: this.options.useSmoothing ? 'smooth' : 'straight',
+                width: 2
             }
         };
+
+        this.chart = new ApexCharts(this.container, config);
+        this.chart.render();
     }
 
-    updateData(newData) {
+    updateOptions(themeConfig) {
         if (this.chart) {
-            this.chart.updateSeries(
-                newData.datasets.map(dataset => ({
-                    name: dataset.label,
-                    data: dataset.data
-                }))
-            );
+            const newOptions = {
+                chart: {
+                    background: themeConfig.colors.background,
+                    foreColor: themeConfig.colors.text
+                },
+                grid: {
+                    borderColor: themeConfig.colors.border
+                },
+                theme: {
+                    mode: themeConfig.theme
+                }
+            };
+            this.chart.updateOptions(newOptions, false, true);
         }
     }
 
-    updateOptions(newOptions) {
-        if (this.chart) {
-            this.chart.updateOptions(newOptions);
+    updateData(newData) {
+        if (this.chart && newData.datasets) {
+            const series = newData.datasets.map(dataset => ({
+                name: dataset.label || 'Series',
+                data: dataset.data || []
+            }));
+            const colors = this.dataManager.getColors(); // Získanie farieb pri aktualizácii
+            this.chart.updateOptions({ colors: colors }, false); // Aktualizácia farieb
+            this.chart.updateSeries(series, true);
         }
     }
 
@@ -116,3 +88,6 @@ class ApexChartsWrapper {
         }
     }
 }
+
+// Export pre prehliadač
+window.ApexChartsWrapper = ApexChartsWrapper;

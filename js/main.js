@@ -1,56 +1,32 @@
-class ChartManager {
-    constructor() {
-        this.dataManager = new DataManager();
-        this.themeManager = new ThemeManager();
-        this.settingsManager = new SettingsManager();
+// Hlavná aplikácia
+const ChartManager = (function() {
+    function ChartManager() {
+        this.dataManager = new window.DataManager();
+        this.themeManager = new window.ThemeManager();
         
-        this.chartjs = new ChartJSWrapper('chartjs', this.dataManager, this.themeManager);
-        this.apex = new ApexChartsWrapper('apex', this.dataManager, this.themeManager);
-        
-        this.init();
-    }
+        this.chartjs = new window.ChartJSWrapper('chartjs', this.dataManager, this.themeManager);
+        this.apex = new window.ApexChartsWrapper('apex', this.dataManager, this.themeManager);
 
-    init() {
-        this.initCharts();
-        this.initSettingsSubscriptions();
-    }
+        // Inicializácia grafov
+        this.chartjs.init();
+        this.apex.init();
 
-    initCharts() {
-        const settings = this.settingsManager.getCurrentSettings();
-        
-        this.chartjs.init(settings);
-        this.apex.init(settings);
-    }
-
-    initSettingsSubscriptions() {
-        // Subscribe to settings changes
-        this.settingsManager.subscribe('chartType', (type) => {
-            this.chartjs.updateChartType(type);
-            this.apex.updateChartType(type);
+        // Register listeners
+        this.dataManager.addListener((data) => {
+            this.chartjs.updateData(data);
+            this.apex.updateData(data);
         });
 
-        this.settingsManager.subscribe('colorPalette', (palette) => {
-            this.chartjs.updateColors(palette);
-            this.apex.updateColors(palette);
-        });
-
-        this.settingsManager.subscribe('gradient', (useGradient) => {
-            this.chartjs.updateGradient(useGradient);
-            this.apex.updateGradient(useGradient);
-        });
-
-        this.settingsManager.subscribe('smoothing', (useSmoothing) => {
-            this.chartjs.updateSmoothing(useSmoothing);
-            this.apex.updateSmoothing(useSmoothing);
-        });
-
-        this.settingsManager.subscribe('legend', (showLegend) => {
-            this.chartjs.updateLegend(showLegend);
-            this.apex.updateLegend(showLegend);
+        this.themeManager.addListener((themeConfig) => {
+            this.chartjs.updateOptions(themeConfig);
+            this.apex.updateOptions(themeConfig);
         });
     }
-}
 
+    return ChartManager;
+})();
+
+// Inicializácia po načítaní stránky
 document.addEventListener('DOMContentLoaded', () => {
-    new ChartManager();
+    window.chartManager = new ChartManager();
 });

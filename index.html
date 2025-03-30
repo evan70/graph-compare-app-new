@@ -11,28 +11,21 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="assets/logo.svg" alt="Logo" class="logo light-logo">
-                <img src="assets/logo-dark.svg" alt="Logo" class="logo dark-logo">
+                <img src="assets/logo.png" alt="Logo" class="logo">
+                <span class="logo-text">Grafy 2024</span>
             </div>
-            
-            <button class="mobile-menu-btn" aria-label="Toggle menu">
+            <div class="nav-menu">
+                <button class="theme-toggle" aria-label="Prepnúť tému">
+                    <i class="fas fa-sun light-icon"></i>
+                    <i class="fas fa-moon dark-icon"></i>
+                </button>
+                <a href="#" class="nav-link active">Domov</a>
+                <a href="#" class="nav-link">Štatistiky</a>
+                <a href="#" class="nav-link">Nastavenia</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu">
                 <i class="fas fa-bars"></i>
             </button>
-
-            <div class="nav-menu">
-                <ul class="nav-links">
-                    <li><a href="#" class="active">Domov</a></li>
-                    <li><a href="#charts">Grafy</a></li>
-                    <li><a href="#data">Dáta</a></li>
-                    <li><a href="#settings">Nastavenia</a></li>
-                </ul>
-                <div class="theme-switch-container">
-                    <button class="theme-switch" aria-label="Prepnúť tému">
-                        <i class="fas fa-sun light-icon"></i>
-                        <i class="fas fa-moon dark-icon"></i>
-                    </button>
-                </div>
-            </div>
         </div>
     </nav>
 
@@ -47,14 +40,19 @@
         </div>
     </div>
 
+    <!-- Externé knižnice -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- Manažéry -->
     <script src="js/managers/DataManager.js"></script>
     <script src="js/managers/ThemeManager.js"></script>
-    <script src="js/managers/ColorManager.js"></script>
-    <script src="js/managers/SettingsManager.js"></script>
+
+    <!-- Wrappery -->
     <script src="js/charts/ChartJSWrapper.js"></script>
     <script src="js/charts/ApexChartsWrapper.js"></script>
+
+    <!-- Hlavná aplikácia -->
     <script src="js/main.js"></script>
 </body>
 </html>

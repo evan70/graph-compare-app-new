@@ -1,80 +1,50 @@
 class ThemeManager {
     constructor() {
-        this.themeToggle = document.getElementById('theme-toggle');
         this.currentTheme = 'light';
-        this.themeColors = {
-            light: {
-                text: '#666666',
-                grid: '#dddddd',
-                background: '#ffffff',
-                border: '#e5e5e5',
-                shadow: 'rgba(0, 0, 0, 0.1)',
-                hover: 'rgba(78, 115, 223, 0.1)',
-                muted: '#858796'
-            },
-            dark: {
-                text: '#e2e5ec',
-                grid: '#2d3139',
-                background: '#1a1d24',
-                border: '#2d3139',
-                shadow: 'rgba(0, 0, 0, 0.3)',
-                hover: 'rgba(78, 115, 223, 0.2)',
-                muted: '#858796'
-            }
-        };
-        this.initTheme();
+        this.listeners = [];
+        this.themeToggle = document.querySelector('.theme-toggle');
+        
         this.initThemeToggle();
     }
 
-    initTheme() {
-        // Check system preference or stored preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-        this.currentTheme = isDark ? 'dark' : 'light';
-        this.applyTheme(isDark);
+    initThemeToggle() {
+        this.themeToggle.addEventListener('click', () => {
+            this.toggleTheme();
+            document.documentElement.setAttribute('data-theme', this.currentTheme);
+        });
     }
 
-    initThemeToggle() {
-        if (this.themeToggle) {
-            this.themeToggle.checked = this.currentTheme === 'dark';
-            this.themeToggle.addEventListener('change', (e) => {
-                this.applyTheme(e.target.checked);
-            });
-        }
+    addListener(callback) {
+        this.listeners.push(callback);
+    }
+
+    notifyListeners() {
+        const themeConfig = this.getThemeConfig();
+        this.listeners.forEach(callback => callback(themeConfig));
     }
 
     getCurrentTheme() {
         return this.currentTheme;
     }
 
-    setTheme(theme) {
-        const isDark = theme === 'dark';
-        this.currentTheme = theme;
-        this.applyTheme(isDark);
+    getThemeConfig() {
+        const isDark = this.currentTheme === 'dark';
+        return {
+            theme: this.currentTheme,
+            colors: {
+                background: isDark ? '#1a1d24' : '#ffffff',
+                text: isDark ? '#e2e5ec' : '#666666',
+                border: isDark ? '#2d3139' : '#dddddd'
+            }
+        };
     }
 
     toggleTheme() {
-        const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
-        this.setTheme(newTheme);
+        this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.notifyListeners();
     }
+}
 
-    applyTheme(isDark) {
-        this.currentTheme = isDark ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', this.currentTheme);
-        
-        // Aplikujeme CSS premenné
-        const colors = this.getThemeColors(this.currentTheme);
-        Object.entries(colors).forEach(([key, value]) => {
-            document.documentElement.style.setProperty(`--${key}-color`, value);
-        });
-        
-        localStorage.setItem('theme', this.currentTheme);
-        return colors;
-    }
-
-    getThemeColors(theme) {
-        return this.themeColors[theme] || this.themeColors.light;
-    }
+if (typeof window !== 'undefined') {
+    window.ThemeManager = ThemeManager;
 }

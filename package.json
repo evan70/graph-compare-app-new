@@ -1,0 +1,21 @@
+{
+  "name": "grafy-2024-new",
+  "version": "0.1.0",
+  "description": "Moderná webová aplikácia pre vizualizáciu dát pomocou Chart.js a ApexCharts",
+  "main": "js/main.js",
+  "scripts": {
+    "test": "jest",
+    "start": "serve .",
+    "dev": "serve ."
+  },
+  "dependencies": {
+    "apexcharts": "^3.54.1",
+    "chart.js": "^4.4.8"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "identity-obj-proxy": "^3.0.0",
+    "serve": "^14.2.1"
+  }
+}
