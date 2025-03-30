@@ -3,6 +3,48 @@
 ## [Nepublikované]
 
 ### Pridané
+- Nové farebné palety: `pastel` a `neon`
+- Rozšírená dokumentácia pre všetky komponenty
+- Lepšia integrácia medzi manažérmi
+
+### Zmenené
+- Aktualizovaná dokumentácia v `/docs`
+- Optimalizovaná štruktúra kódu
+- Vylepšené error handling
+
+## [2024-01-23]
+
+### Pridané
+- Implementovaný `NavigationManager` pre správu mobilnej navigácie
+  - Responzívne menu pre mobilné zariadenia
+  - Animované otvorenie/zatvorenie menu
+  - Automatické zatváranie pri kliknutí mimo menu
+  - Prepínanie ikon menu (hamburger/close)
+- Vylepšená navigácia
+  - Plynulé animácie pre hover efekty
+  - Indikátor aktívnej položky menu
+  - Lepšia prístupnosť s ARIA atribútmi
+  - Backdrop filter pre moderný vzhľad
+- Optimalizácia pre mobilné zariadenia
+  - Responzívny dizajn
+  - Touch-friendly interakcie
+  - Plynulé animácie
+  - Lepšia čitateľnosť na malých obrazovkách
+
+### Zmenené
+- Prepracovaná štruktúra navigácie
+- Vylepšený mobilný UX
+- Optimalizované animácie a prechody
+- Lepšia integrácia s theme switcherom
+
+### Opravené
+- Správne zatváranie menu pri zmene veľkosti okna
+- Konzistentné správanie na všetkých zariadeniach
+- Lepšia podpora pre rôzne veľkosti obrazoviek
+
+## [2024-01-22]
+
+### Pridané
 - Implementovaný `FullscreenManager` pre lepšiu správu fullscreen módu
   - Centralizovaná logika pre fullscreen funkcionalitu
   - Podpora pre ChartJS aj ApexCharts
@@ -29,32 +71,6 @@
 - Lepšie ošetrenie stavov pri prepínaní fullscreen módu
 - Konzistentnejšie správanie pri zmene témy vo fullscreen móde
 - Správne čistenie resources pri zatvorení fullscreen módu
-
-## [2024-01-22]
-
-### Pridané
-- Implementovaná správa farieb v `DataManager`
-  - Preddefinované farebné palety (default, cool, warm)
-  - Metódy pre prácu s paletami
-  - Podpora vlastných paliet
-- Rozšírená funkcionalita `ThemeManager`
-  - Perzistencia nastavení témy
-  - Systémové preferencie témy
-  - Rozšírené farebné schémy pre témy
-- Aktualizovaná dokumentácia komponentov
-  - Podrobný popis vlastností a metód
-  - Príklady použitia
-  - Dokumentácia farebných paliet
-
-### Zmenené
-- Refaktoring správy farieb a tém
-- Vylepšená integrácia medzi manažérmi
-- Optimalizovaná inicializácia komponentov
-
-### Opravené
-- Chýbajúce metódy v manažéroch
-- Konzistencia farebných schém
-- Správanie pri zmene témy
 
 ## [2024-01-21]
 

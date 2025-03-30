@@ -84,6 +84,7 @@ Wrapper pre ApexCharts knižnicu.
 - `updateData(newData)` - Aktualizuje dáta grafu
 - `updateOptions(newOptions)` - Aktualizuje nastavenia grafu
 - `destroy()` - Zruší graf a uvoľní resources
+- `getInitialConfig()` - Získa počiatočnú konfiguráciu
 
 #### Konfigurácia
 ```javascript

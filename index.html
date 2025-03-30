@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <!-- Nová navigácia -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -16,9 +15,24 @@
                 <img src="assets/logo-dark.svg" alt="Logo" class="logo dark-logo">
             </div>
             
-            <button class="mobile-menu-btn">
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
                 <i class="fas fa-bars"></i>
             </button>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="#" class="active">Domov</a></li>
+                    <li><a href="#charts">Grafy</a></li>
+                    <li><a href="#data">Dáta</a></li>
+                    <li><a href="#settings">Nastavenia</a></li>
+                </ul>
+                <div class="theme-switch-container">
+                    <button class="theme-switch" aria-label="Prepnúť tému">
+                        <i class="fas fa-sun light-icon"></i>
+                        <i class="fas fa-moon dark-icon"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 

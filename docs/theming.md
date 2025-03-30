@@ -1,4 +1,5 @@
 # Témy a štýlovanie
+Posledná aktualizácia: 2024-01-23
 
 ## Farebné palety
 
@@ -18,12 +19,22 @@
   ['#FF6B6B', '#FFB347', '#FFEEAD', '#FFD93D', '#FF8C42',
    '#FF6B6B', '#FF4757', '#FF3E41', '#FF2E2E', '#FF1F1F']
   ```
+- `pastel` - Pastelové farby (Nové)
+  ```javascript
+  ['#FFB3BA', '#BAFFC9', '#BAE1FF', '#FFFFBA', '#FFB3F7',
+   '#B3FFEC', '#B3B3FF', '#FFE4B3', '#B3FFB3', '#FFB3B3']
+  ```
+- `neon` - Neónové farby (Nové)
+  ```javascript
+  ['#FF1E1E', '#1EFF1E', '#1E1EFF', '#FFFF1E', '#FF1EFF',
+   '#1EFFFF', '#FF8B1E', '#1EFF8B', '#8B1EFF', '#FF1E8B']
+  ```
 
 ### Vlastné palety
-Možnosť definovať vlastné palety pomocou `DataManager`:
+Možnosť definovať vlastné palety pomocou `ColorManager`:
 
 ```javascript
-dataManager.addCustomPalette('myPalette', [
+colorManager.addCustomPalette('myPalette', [
     '#FF0000', '#00FF00', '#0000FF'
 ]);
 ```
@@ -64,4 +75,22 @@ themeManager.toggleTheme();
 ThemeManager automaticky detekuje systémové preferencie témy:
 ```javascript
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+```
+
+## CSS premenné
+Definované v root:
+```css
+:root {
+    --primary-color: #4e73df;
+    --secondary-color: #e74a3b;
+    --bg-color: #ffffff;
+    --text-color: #666666;
+    --border-color: #dddddd;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a1d24;
+    --text-color: #e2e5ec;
+    --border-color: #2d3139;
+}
 ```
