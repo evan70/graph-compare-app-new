@@ -5,7 +5,8 @@ class SettingsManager {
             colorPalette: 'default',
             useGradient: true,
             useSmoothing: true,
-            showLegend: true
+            showLegend: true,
+            theme: 'light'
         };
         
         this.callbacks = {
@@ -13,7 +14,8 @@ class SettingsManager {
             onColorPaletteChange: [],
             onGradientChange: [],
             onSmoothingChange: [],
-            onLegendChange: []
+            onLegendChange: [],
+            onThemeChange: []
         };
 
         this.loadSettings();
@@ -21,14 +23,19 @@ class SettingsManager {
         this.initSettingsToggle();
     }
 
+    // Pridáme getter pre tému
+    getTheme() {
+        return this.settings.theme;
+    }
+
     initControls() {
         // Chart type controls
         document.querySelectorAll('input[name="chartType"]').forEach(input => {
-            if (input.value === this.settings.chartType) {
-                input.checked = true;
-            }
+            input.checked = input.value === this.settings.chartType;
             input.addEventListener('change', (e) => {
-                this.updateSetting('chartType', e.target.value);
+                if (e.target.checked) {
+                    this.updateSetting('chartType', e.target.value);
+                }
             });
         });
 
@@ -50,11 +57,12 @@ class SettingsManager {
     initSettingsToggle() {
         const settingsToggle = document.querySelector('.settings-toggle');
         const settingsContent = document.querySelector('.settings-content');
+        const icon = settingsToggle?.querySelector('i');
         
         if (settingsToggle && settingsContent) {
             settingsToggle.addEventListener('click', () => {
                 settingsContent.classList.toggle('hidden');
-                settingsToggle.querySelector('i').classList.toggle('fa-rotate-180');
+                icon?.classList.toggle('fa-rotate-180');
             });
         }
     }
@@ -73,38 +81,16 @@ class SettingsManager {
         this.settings[key] = value;
         this.saveSettings();
         
-        // Notify callbacks
         const callbackKey = `on${key.charAt(0).toUpperCase() + key.slice(1)}Change`;
         if (this.callbacks[callbackKey]) {
             this.callbacks[callbackKey].forEach(callback => callback(value));
         }
     }
 
-    subscribe(event, callback) {
-        const callbackKey = `on${event}Change`;
-        if (this.callbacks[callbackKey]) {
-            this.callbacks[callbackKey].push(callback);
-        }
-    }
-
-    getCurrentSettings() {
-        return { ...this.settings };
-    }
-
     loadSettings() {
         const savedSettings = localStorage.getItem('chartSettings');
         if (savedSettings) {
-            const parsed = JSON.parse(savedSettings);
-            // Merge saved settings with defaults
-            this.settings = { ...this.settings, ...parsed };
-            
-            // Notify all subscribers of initial values
-            Object.keys(this.settings).forEach(key => {
-                const callbackKey = `on${key.charAt(0).toUpperCase() + key.slice(1)}Change`;
-                if (this.callbacks[callbackKey]) {
-                    this.callbacks[callbackKey].forEach(callback => callback(this.settings[key]));
-                }
-            });
+            this.settings = { ...this.settings, ...JSON.parse(savedSettings) };
         }
     }
 
@@ -112,12 +98,12 @@ class SettingsManager {
         localStorage.setItem('chartSettings', JSON.stringify(this.settings));
     }
 
-    // Gettery pre jednotlivé nastavenia
-    getChartType() { return this.settings.chartType; }
-    getColorPalette() { return this.settings.colorPalette; }
-    getUseGradient() { return this.settings.useGradient; }
-    getUseSmoothing() { return this.settings.useSmoothing; }
-    getShowLegend() { return this.settings.showLegend; }
+    subscribe(setting, callback) {
+        const callbackKey = `on${setting.charAt(0).toUpperCase() + setting.slice(1)}Change`;
+        if (this.callbacks[callbackKey]) {
+            this.callbacks[callbackKey].push(callback);
+        }
+    }
 }
 
 // Export pre prehliadač

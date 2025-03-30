@@ -1,29 +1,34 @@
-# Zoznam zmien
+# Changelog
 
 ## [0.1.3] - 2024-01-24
 
-### Pridané
-- Implementovaný `SettingsManager` pre správu nastavení grafov
-  - Perzistencia nastavení v localStorage
-  - Centralizovaná správa užívateľských preferencií
-  - Systém notifikácií pre zmeny nastavení
-- Nové nastavenia pre grafy
-  - Výber typu grafu (line, bar, area)
-  - Výber farebnej palety
-  - Toggle pre gradienty
-  - Toggle pre vyhladzovanie
-  - Toggle pre zobrazenie legendy
-- Rozšírená dokumentácia
-  - Nový súbor settings-manager.md
-  - Aktualizovaná architektúra aplikácie
+### Opravené
+- Synchronizácia dát medzi Chart.js a ApexCharts grafmi
+  - Zjednotené zobrazovanie datasetov
+  - Konzistentné spracovanie labels
+  - Správne mapovanie farieb
+- Implementácia DataManager
+  - Kompletná správa datasetov a farieb
+  - Systém notifikácií pre zmeny
+  - Podpora pre rôzne farebné palety
 
 ### Zmenené
-- Vylepšená integrácia nastavení s grafmi
-  - Okamžitá reakcia na zmeny nastavení
-  - Lepšia synchronizácia medzi Chart.js a ApexCharts
-- Optimalizovaná inicializácia aplikácie
-  - Načítanie uložených nastavení pri štarte
-  - Automatická aplikácia nastavení na UI elementy
+- Vylepšená implementácia wrapperov
+  - ChartJSWrapper: lepšia podpora gradientov a štýlov
+  - ApexChartsWrapper: správne mapovanie dát a kategórií
+  - Zjednotené rozhranie pre oba wrappery
+- Rozšírená funkcionalita DataManager
+  - Pridaná metóda setLabels
+  - Vylepšená správa farebných paliet
+  - Lepšia integrácia s wrappermi
+
+### Pridané
+- Nové pomocné metódy v ChartJSWrapper
+  - createGradient pre lepšie vizuálne efekty
+  - adjustColor pre správu priehľadnosti
+- Rozšírená dokumentácia
+  - Aktualizovaný changelog
+  - Doplnené informácie o zmenách
 
 ## [0.1.2] - 2024-01-24
 

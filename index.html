@@ -41,6 +41,7 @@
                 </button>
             </div>
             <div class="settings-content">
+                <!-- Typ grafu -->
                 <div class="settings-group">
                     <h3>Typ grafu</h3>
                     <div class="radio-group">
@@ -59,35 +60,32 @@
                     </div>
                 </div>
 
+                <!-- Farebná paleta -->
                 <div class="settings-group">
                     <h3>Farebná paleta</h3>
                     <select id="color-palette" class="settings-select">
                         <option value="default">Predvolená</option>
-                        <option value="pastel">Pastelová</option>
                         <option value="dark">Tmavá</option>
+                        <option value="pastel">Pastelová</option>
                         <option value="neon">Neónová</option>
                     </select>
                 </div>
 
+                <!-- Prepínače -->
                 <div class="settings-group">
-                    <h3>Ďalšie nastavenia</h3>
+                    <h3>Vizuálne efekty</h3>
                     <div class="toggle-group">
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="gradient-toggle" checked>
-                            <span class="toggle-slider"></span>
-                            <span class="toggle-label">Gradienty</span>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="gradient-toggle" class="toggle-input">
+                            <span class="toggle-text">Gradienty</span>
                         </label>
-                        
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="smooth-toggle" checked>
-                            <span class="toggle-slider"></span>
-                            <span class="toggle-label">Vyhladzovanie</span>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="smooth-toggle" class="toggle-input">
+                            <span class="toggle-text">Vyhladzovanie</span>
                         </label>
-                        
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="legend-toggle" checked>
-                            <span class="toggle-slider"></span>
-                            <span class="toggle-label">Legenda</span>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="legend-toggle" class="toggle-input">
+                            <span class="toggle-text">Legenda</span>
                         </label>
                     </div>
                 </div>

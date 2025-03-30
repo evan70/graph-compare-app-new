@@ -1,17 +1,33 @@
 class ThemeManager {
-    constructor() {
-        this.currentTheme = 'light';
+    constructor(settingsManager) {
+        this.settingsManager = settingsManager;
+        this.currentTheme = this.settingsManager.getTheme() || 'light';
         this.listeners = [];
         this.themeToggle = document.querySelector('.theme-toggle');
         
         this.initThemeToggle();
+        this.applyTheme(this.currentTheme);
     }
 
     initThemeToggle() {
-        this.themeToggle.addEventListener('click', () => {
-            this.toggleTheme();
-            document.documentElement.setAttribute('data-theme', this.currentTheme);
-        });
+        if (this.themeToggle) {
+            this.themeToggle.addEventListener('click', () => {
+                const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+                this.setTheme(newTheme);
+            });
+        }
+    }
+
+    setTheme(theme) {
+        this.currentTheme = theme;
+        this.settingsManager.updateSetting('theme', theme);
+        this.applyTheme(theme);
+        this.notifyListeners();
+    }
+
+    applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        this.currentTheme = theme;
     }
 
     addListener(callback) {
@@ -37,11 +53,6 @@ class ThemeManager {
                 border: isDark ? '#2d3139' : '#dddddd'
             }
         };
-    }
-
-    toggleTheme() {
-        this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-        this.notifyListeners();
     }
 }
 

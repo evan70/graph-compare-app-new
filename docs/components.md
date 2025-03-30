@@ -7,20 +7,25 @@ Trieda pre správu dát a farieb grafov.
 
 #### Vlastnosti
 - `data` - Objekt obsahujúci dátové sady pre grafy
-- `colors` - Objekt obsahujúci farebné palety
-- `currentPalette` - Aktuálne zvolená paleta
+  - `labels` - Popisky pre x-ovú os
+  - `datasets` - Pole datasetov s vlastnosťami label, data a color
+- `colors` - Pole farieb pre aktuálnu paletu
+- `currentPalette` - Názov aktuálne zvolenej palety
+- `listeners` - Pole callback funkcií pre notifikácie
 
 #### Metódy
 - `constructor()` - Inicializuje základné dátové štruktúry a palety
 - `getCurrentData()` - Vráti aktuálny dataset
 - `getColors()` - Vráti farby z aktuálnej palety
-- `setPalette(name)` - Nastaví aktívnu paletu
+- `setPalette(name)` - Nastaví aktívnu paletu (default/dark/pastel/neon)
 - `getCurrentPalette()` - Vráti názov aktuálnej palety
-- `addCustomPalette(name, colors)` - Pridá vlastnú paletu
-- `updateData(newData)` - Aktualizuje celý dataset
+- `addListener(callback)` - Pridá callback pre notifikácie o zmenách
+- `removeListener(callback)` - Odstráni callback
+- `notifyListeners()` - Notifikuje všetky registrované callbacky
 - `addDataset(label, data, color)` - Pridá nový dataset
 - `removeDataset(index)` - Odstráni dataset podľa indexu
 - `updateDataset(index, newData)` - Aktualizuje konkrétny dataset
+- `setLabels(labels)` - Nastaví nové popisky pre x-ovú os
 
 ### ThemeManager
 Správca tém (svetlá/tmavá).
@@ -67,6 +72,11 @@ Wrapper pre Chart.js knižnicu.
 - `updateOptions(newOptions)` - Aktualizuje nastavenia grafu
 - `destroy()` - Zruší graf a uvoľní resources
 
+#### Nové metódy
+- `createGradient(color)` - Vytvorí gradient pre pozadie
+- `adjustColor(color, opacity)` - Upraví priehľadnosť farby
+- `updateColors(palette)` - Aktualizuje farby podľa zvolenej palety
+
 ### ApexChartsWrapper
 Wrapper pre ApexCharts knižnicu.
 
@@ -85,6 +95,10 @@ Wrapper pre ApexCharts knižnicu.
 - `updateOptions(newOptions)` - Aktualizuje nastavenia grafu
 - `destroy()` - Zruší graf a uvoľní resources
 - `getInitialConfig()` - Získa počiatočnú konfiguráciu
+
+#### Vylepšené metódy
+- `updateData(newData)` - Synchronizovaná aktualizácia dát a labels
+- `updateColors(palette)` - Konzistentná správa farieb s Chart.js
 
 #### Konfigurácia
 ```javascript

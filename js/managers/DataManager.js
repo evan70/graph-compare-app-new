@@ -17,6 +17,7 @@ class DataManager {
         };
         this.listeners = [];
         this.colors = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'];
+        this.currentPalette = 'default';
     }
 
     getCurrentData() {
@@ -27,8 +28,37 @@ class DataManager {
         return this.colors;
     }
 
+    setPalette(name) {
+        const palettes = {
+            default: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
+            dark: ['#2c3e50', '#e74c3c', '#3498db', '#2ecc71', '#f1c40f'],
+            pastel: ['#ff9999', '#99ff99', '#99ccff', '#ffcc99', '#ff99cc'],
+            neon: ['#00ff00', '#ff00ff', '#00ffff', '#ffff00', '#ff0000']
+        };
+
+        if (palettes[name]) {
+            this.colors = palettes[name];
+            this.currentPalette = name;
+            
+            // Aktualizujeme farby v datasetoch
+            this.data.datasets.forEach((dataset, index) => {
+                dataset.color = this.colors[index % this.colors.length];
+            });
+            
+            this.notifyListeners();
+        }
+    }
+
+    getCurrentPalette() {
+        return this.currentPalette;
+    }
+
     addListener(callback) {
         this.listeners.push(callback);
+    }
+
+    removeListener(callback) {
+        this.listeners = this.listeners.filter(listener => listener !== callback);
     }
 
     notifyListeners() {
@@ -36,11 +66,33 @@ class DataManager {
     }
 
     addDataset(label, data, color) {
+        const newColor = color || this.colors[this.data.datasets.length % this.colors.length];
+        
         this.data.datasets.push({
             label,
             data,
-            color: color || this.colors[this.data.datasets.length % this.colors.length]
+            color: newColor
         });
+        
+        this.notifyListeners();
+    }
+
+    removeDataset(index) {
+        if (index >= 0 && index < this.data.datasets.length) {
+            this.data.datasets.splice(index, 1);
+            this.notifyListeners();
+        }
+    }
+
+    updateDataset(index, newData) {
+        if (index >= 0 && index < this.data.datasets.length) {
+            this.data.datasets[index].data = newData;
+            this.notifyListeners();
+        }
+    }
+
+    setLabels(labels) {
+        this.data.labels = labels;
         this.notifyListeners();
     }
 }

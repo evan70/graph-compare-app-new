@@ -1,11 +1,15 @@
 // Hlavná aplikácia
 const ChartManager = (function() {
     function ChartManager() {
-        // Inicializácia manažérov
+        // Najprv inicializujeme SettingsManager
+        this.settingsManager = new window.SettingsManager();
+        
+        // Potom ThemeManager s referenciou na SettingsManager
+        this.themeManager = new window.ThemeManager(this.settingsManager);
+        
+        // Ostatné manažéry
         this.dataManager = new window.DataManager();
-        this.themeManager = new window.ThemeManager();
         this.navigationManager = new window.NavigationManager();
-        this.settingsManager = new window.SettingsManager(); // Pridaný SettingsManager
         this.fullscreenManager = new window.FullscreenManager(
             this.themeManager,
             this.dataManager
@@ -72,3 +76,7 @@ const ChartManager = (function() {
 document.addEventListener('DOMContentLoaded', () => {
     window.chartManager = new ChartManager();
 });
+
+// Odstráňme duplicitnú inicializáciu
+// const settingsManager = new SettingsManager();
+// const themeManager = new ThemeManager(settingsManager);

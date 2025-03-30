@@ -10,6 +10,45 @@ class ChartJSWrapper {
         };
     }
 
+    getChartOptions() {
+        const isDark = this.themeManager.getCurrentTheme() === 'dark';
+        const textColor = isDark ? '#e2e5ec' : '#666666';
+        const gridColor = isDark ? '#2d3139' : '#ddd';
+
+        return {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: textColor
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: gridColor,
+                        borderColor: gridColor
+                    },
+                    ticks: {
+                        color: textColor
+                    }
+                },
+                y: {
+                    grid: {
+                        color: gridColor,
+                        borderColor: gridColor
+                    },
+                    ticks: {
+                        color: textColor
+                    }
+                }
+            }
+        };
+    }
+
     init() {
         const ctx = this.container.getContext('2d');
         this.chart = new Chart(ctx, this.getInitialConfig());
@@ -36,55 +75,62 @@ class ChartJSWrapper {
         }
     }
 
+    setChartType(type) {
+        if (!this.chart) return;
+        
+        // Pre 'area' použijeme 'line' s fill: true
+        const chartType = type === 'area' ? 'line' : type;
+        this.chart.config.type = chartType;
+        
+        // Nastavenie fill podľa typu
+        this.chart.data.datasets.forEach(dataset => {
+            if (type === 'area') {
+                dataset.fill = true;
+            } else {
+                dataset.fill = this.options.useGradient;
+            }
+        });
+        
+        this.chart.update();
+    }
+
     getInitialConfig() {
         const data = this.dataManager.getCurrentData();
         const colors = this.dataManager.getColors();
         const isDark = this.themeManager.getCurrentTheme() === 'dark';
-        
+
         return {
             type: 'line',
             data: {
                 labels: data.labels,
                 datasets: data.datasets.map((dataset, index) => ({
                     ...dataset,
-                    borderColor: dataset.color || colors[index % colors.length],
+                    borderColor: colors[index % colors.length],
                     backgroundColor: this.options.useGradient ? 
-                        this.createGradient(dataset.color || colors[index % colors.length]) : 
+                        this.createGradient(colors[index % colors.length]) : 
                         'transparent',
-                    tension: this.options.useSmoothing ? 0.4 : 0
+                    tension: this.options.useSmoothing ? 0.4 : 0,
+                    fill: false
                 }))
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { 
-                            color: isDark ? '#e2e5ec' : '#666666' 
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: { 
-                            color: isDark ? '#2d3139' : '#dddddd' 
-                        },
-                        ticks: { 
-                            color: isDark ? '#e2e5ec' : '#666666' 
-                        }
-                    },
-                    y: {
-                        grid: { 
-                            color: isDark ? '#2d3139' : '#dddddd' 
-                        },
-                        ticks: { 
-                            color: isDark ? '#e2e5ec' : '#666666' 
-                        }
-                    }
-                }
-            }
+            options: this.getChartOptions()
         };
+    }
+
+    updateColors(palette) {
+        if (!this.chart) return;
+        
+        const colors = this.dataManager.getColors();
+        
+        this.chart.data.datasets.forEach((dataset, index) => {
+            const color = colors[index % colors.length];
+            dataset.borderColor = color;
+            dataset.backgroundColor = this.options.useGradient ? 
+                this.createGradient(color) : 
+                (dataset.fill ? this.adjustColor(color, 0.2) : 'transparent');
+        });
+        
+        this.chart.update();
     }
 
     createGradient(color) {
@@ -100,7 +146,6 @@ class ChartJSWrapper {
     }
 
     adjustColor(color, opacity) {
-        // Konvertuje hex na rgba s danou priehľadnosťou
         const r = parseInt(color.slice(1, 3), 16);
         const g = parseInt(color.slice(3, 5), 16);
         const b = parseInt(color.slice(5, 7), 16);
@@ -108,5 +153,6 @@ class ChartJSWrapper {
     }
 }
 
-// Export pre prehliadač
-window.ChartJSWrapper = ChartJSWrapper;
+if (typeof window !== 'undefined') {
+    window.ChartJSWrapper = ChartJSWrapper;
+}

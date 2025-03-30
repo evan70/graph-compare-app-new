@@ -20,7 +20,7 @@ class ApexChartsWrapper {
                 name: dataset.label,
                 data: dataset.data
             })),
-            colors: colors, // Pridané farby z DataManager
+            colors: colors,
             chart: {
                 type: 'line',
                 height: 350,
@@ -51,6 +51,26 @@ class ApexChartsWrapper {
         this.chart.render();
     }
 
+    updateColors(palette) {
+        if (!this.chart) return;
+        
+        const colors = this.dataManager.getColors();
+        
+        this.chart.updateOptions({
+            colors: colors
+        }, false, true);
+    }
+
+    updateData(newData) {
+        if (this.chart && newData.datasets) {
+            const series = newData.datasets.map(dataset => ({
+                name: dataset.label || 'Series',
+                data: dataset.data || []
+            }));
+            this.chart.updateSeries(series, true);
+        }
+    }
+
     updateOptions(themeConfig) {
         if (this.chart) {
             const newOptions = {
@@ -69,16 +89,23 @@ class ApexChartsWrapper {
         }
     }
 
-    updateData(newData) {
-        if (this.chart && newData.datasets) {
-            const series = newData.datasets.map(dataset => ({
-                name: dataset.label || 'Series',
-                data: dataset.data || []
-            }));
-            const colors = this.dataManager.getColors(); // Získanie farieb pri aktualizácii
-            this.chart.updateOptions({ colors: colors }, false); // Aktualizácia farieb
-            this.chart.updateSeries(series, true);
+    setChartType(type) {
+        if (!this.chart) return;
+        
+        let apexType = type;
+        if (type === 'area') {
+            apexType = 'area';
+        } else if (type === 'bar') {
+            apexType = 'bar';
+        } else {
+            apexType = 'line';
         }
+
+        this.chart.updateOptions({
+            chart: {
+                type: apexType
+            }
+        });
     }
 
     destroy() {
@@ -89,5 +116,6 @@ class ApexChartsWrapper {
     }
 }
 
-// Export pre prehliadač
-window.ApexChartsWrapper = ApexChartsWrapper;
+if (typeof window !== 'undefined') {
+    window.ApexChartsWrapper = ApexChartsWrapper;
+}
