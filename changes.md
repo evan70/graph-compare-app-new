@@ -1,5 +1,30 @@
 # Zoznam zmien
 
+## [0.1.3] - 2024-01-24
+
+### Pridané
+- Implementovaný `SettingsManager` pre správu nastavení grafov
+  - Perzistencia nastavení v localStorage
+  - Centralizovaná správa užívateľských preferencií
+  - Systém notifikácií pre zmeny nastavení
+- Nové nastavenia pre grafy
+  - Výber typu grafu (line, bar, area)
+  - Výber farebnej palety
+  - Toggle pre gradienty
+  - Toggle pre vyhladzovanie
+  - Toggle pre zobrazenie legendy
+- Rozšírená dokumentácia
+  - Nový súbor settings-manager.md
+  - Aktualizovaná architektúra aplikácie
+
+### Zmenené
+- Vylepšená integrácia nastavení s grafmi
+  - Okamžitá reakcia na zmeny nastavení
+  - Lepšia synchronizácia medzi Chart.js a ApexCharts
+- Optimalizovaná inicializácia aplikácie
+  - Načítanie uložených nastavení pri štarte
+  - Automatická aplikácia nastavení na UI elementy
+
 ## [0.1.2] - 2024-01-24
 
 ### Opravené

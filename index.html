@@ -11,9 +11,15 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="assets/logo.png" alt="Logo" class="logo">
+                <img src="assets/logo.svg" alt="Logo" class="logo">
                 <span class="logo-text">Grafy 2024</span>
             </div>
+            
+            <!-- Pridané tlačidlo pre mobilné menu -->
+            <button class="mobile-menu-btn" aria-label="Menu" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+
             <div class="nav-menu">
                 <button class="theme-toggle" aria-label="Prepnúť tému">
                     <i class="fas fa-sun light-icon"></i>
@@ -23,20 +29,99 @@
                 <a href="#" class="nav-link">Štatistiky</a>
                 <a href="#" class="nav-link">Nastavenia</a>
             </div>
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
     </nav>
 
     <div class="container">
+        <div class="settings-container">
+            <div class="settings-header">
+                <h2>Nastavenia grafov</h2>
+                <button class="settings-toggle" aria-label="Zobraziť/skryť nastavenia">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+            <div class="settings-content">
+                <div class="settings-group">
+                    <h3>Typ grafu</h3>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="chartType" value="line" checked>
+                            Čiarový
+                        </label>
+                        <label>
+                            <input type="radio" name="chartType" value="bar">
+                            Stĺpcový
+                        </label>
+                        <label>
+                            <input type="radio" name="chartType" value="area">
+                            Plošný
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>Farebná paleta</h3>
+                    <select id="color-palette" class="settings-select">
+                        <option value="default">Predvolená</option>
+                        <option value="pastel">Pastelová</option>
+                        <option value="dark">Tmavá</option>
+                        <option value="neon">Neónová</option>
+                    </select>
+                </div>
+
+                <div class="settings-group">
+                    <h3>Ďalšie nastavenia</h3>
+                    <div class="toggle-group">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="gradient-toggle" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Gradienty</span>
+                        </label>
+                        
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="smooth-toggle" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Vyhladzovanie</span>
+                        </label>
+                        
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="legend-toggle" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Legenda</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="charts-container">
             <div class="chart-box">
+                <div class="chart-header">
+                    <h2>Chart.js Graf</h2>
+                    <button class="fullscreen-btn" data-graf="chartjs" aria-label="Otvoriť na celú obrazovku">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
                 <canvas id="chartjs"></canvas>
             </div>
             <div class="chart-box">
+                <div class="chart-header">
+                    <h2>Apex Graf</h2>
+                    <button class="fullscreen-btn" data-graf="apex" aria-label="Otvoriť na celú obrazovku">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
                 <div id="apex"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- Pridáme fullscreen overlay -->
+    <div class="fullscreen-overlay">
+        <div class="fullscreen-graf-container">
+            <button class="fullscreen-close-btn" aria-label="Zavrieť fullscreen">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
     </div>
 
@@ -47,6 +132,9 @@
     <!-- Manažéry -->
     <script src="js/managers/DataManager.js"></script>
     <script src="js/managers/ThemeManager.js"></script>
+    <script src="js/managers/NavigationManager.js"></script>
+    <script src="js/managers/FullscreenManager.js"></script>
+    <script src="js/managers/SettingsManager.js"></script>  <!-- Pridaný SettingsManager -->
 
     <!-- Wrappery -->
     <script src="js/charts/ChartJSWrapper.js"></script>

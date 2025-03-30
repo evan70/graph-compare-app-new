@@ -59,3 +59,10 @@ class NavigationManager {
         icon.classList.add('fa-bars');
     }
 }
+
+// Export pre Node.js aj prehliadač
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = NavigationManager;
+} else {
+    window.NavigationManager = NavigationManager;
+}

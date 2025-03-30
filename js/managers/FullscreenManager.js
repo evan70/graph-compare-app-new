@@ -1,6 +1,7 @@
 class FullscreenManager {
-    constructor(themeManager) {
+    constructor(themeManager, dataManager) {  // pridaný dataManager parameter
         this.themeManager = themeManager;
+        this.dataManager = dataManager;       // pridané
         this.fullscreenOverlay = document.querySelector('.fullscreen-overlay');
         this.fullscreenContainer = document.querySelector('.fullscreen-graf-container');
         this.closeFullscreenBtn = document.querySelector('.fullscreen-close-btn');
@@ -117,11 +118,18 @@ class FullscreenManager {
     }
 
     getChartJSConfig(textColor, gridColor) {
-        // Konfigurácia pre ChartJS
+        const data = this.dataManager.getCurrentData();  // získame aktuálne dáta
+        
         return {
-            type: 'line', // alebo iný typ podľa potreby
+            type: 'line',
             data: {
-                // dáta grafu
+                labels: data.labels,
+                datasets: data.datasets.map(dataset => ({
+                    label: dataset.label,
+                    data: dataset.data,
+                    borderColor: dataset.borderColor,
+                    tension: 0.4
+                }))
             },
             options: {
                 responsive: true,
@@ -147,9 +155,9 @@ class FullscreenManager {
     }
 
     getApexConfig() {
-        // Konfigurácia pre ApexCharts
+        const data = this.dataManager.getCurrentData();  // získame aktuálne dáta
+        
         return {
-            // Základná konfigurácia
             chart: {
                 type: 'line',
                 height: '100%',
@@ -161,7 +169,16 @@ class FullscreenManager {
                     show: true
                 }
             },
-            // Ďalšie nastavenia...
+            series: data.datasets.map(dataset => ({
+                name: dataset.label,
+                data: dataset.data
+            })),
+            xaxis: {
+                categories: data.labels
+            }
         };
     }
 }
+
+// Export pre prehliadač
+window.FullscreenManager = FullscreenManager;
