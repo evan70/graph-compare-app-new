@@ -15,23 +15,32 @@ class DataManager {
                 fill: false
             }]
         };
-
-        this.rowColors = [
-            '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', 
-            '#FFB347', '#A8E6CF', '#DCEDC1', '#FFD93D', '#FF8C42',
-            '#6C5B7B', '#C06C84'
-        ];
-    }
-
-    generateTestData() {
-        // Implementácia generovania testovacích dát
     }
 
     getCurrentData() {
         return this.data;
     }
 
-    getColors() {
-        return this.rowColors;
+    updateData(newData) {
+        this.data = newData;
+    }
+
+    addDataset(label, data, color) {
+        this.data.datasets.push({
+            label: label,
+            data: data,
+            borderColor: color,
+            fill: false
+        });
+    }
+
+    removeDataset(index) {
+        this.data.datasets.splice(index, 1);
+    }
+
+    updateDataset(index, newData) {
+        if (this.data.datasets[index]) {
+            this.data.datasets[index] = { ...this.data.datasets[index], ...newData };
+        }
     }
 }
