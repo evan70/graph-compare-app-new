@@ -1,5 +1,31 @@
 # Zoznam zmien
 
+## [2024-01-22]
+
+### Pridané
+- Implementovaná správa farieb v `DataManager`
+  - Preddefinované farebné palety (default, cool, warm)
+  - Metódy pre prácu s paletami
+  - Podpora vlastných paliet
+- Rozšírená funkcionalita `ThemeManager`
+  - Perzistencia nastavení témy
+  - Systémové preferencie témy
+  - Rozšírené farebné schémy pre témy
+- Aktualizovaná dokumentácia komponentov
+  - Podrobný popis vlastností a metód
+  - Príklady použitia
+  - Dokumentácia farebných paliet
+
+### Zmenené
+- Refaktoring správy farieb a tém
+- Vylepšená integrácia medzi manažérmi
+- Optimalizovaná inicializácia komponentov
+
+### Opravené
+- Chýbajúce metódy v manažéroch
+- Konzistencia farebných schém
+- Správanie pri zmene témy
+
 ## [2024-01-21]
 
 ### Pridané

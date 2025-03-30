@@ -3,36 +3,41 @@
 ## Manažéri (Managers)
 
 ### DataManager
-Trieda pre správu dát grafov.
+Trieda pre správu dát a farieb grafov.
+
+#### Vlastnosti
+- `data` - Objekt obsahujúci dátové sady pre grafy
+- `colors` - Objekt obsahujúci farebné palety
+- `currentPalette` - Aktuálne zvolená paleta
 
 #### Metódy
-- `constructor()` - Inicializuje základné dátové štruktúry
+- `constructor()` - Inicializuje základné dátové štruktúry a palety
 - `getCurrentData()` - Vráti aktuálny dataset
+- `getColors()` - Vráti farby z aktuálnej palety
+- `setPalette(name)` - Nastaví aktívnu paletu
+- `getCurrentPalette()` - Vráti názov aktuálnej palety
+- `addCustomPalette(name, colors)` - Pridá vlastnú paletu
 - `updateData(newData)` - Aktualizuje celý dataset
 - `addDataset(label, data, color)` - Pridá nový dataset
 - `removeDataset(index)` - Odstráni dataset podľa indexu
 - `updateDataset(index, newData)` - Aktualizuje konkrétny dataset
 
-### ColorManager
-Správca farebných paliet pre grafy.
-
-#### Vlastnosti
-- `colorPalettes` - Objekt obsahujúci preddefinované palety
-- `currentPalette` - Aktuálne zvolená paleta
-
-#### Metódy
-- `getPalette(name)` - Získa paletu podľa názvu
-- `getCurrentPalette()` - Vráti aktuálnu paletu
-- `setPalette(name)` - Nastaví aktívnu paletu
-- `addCustomPalette(name, colors)` - Pridá vlastnú paletu
-
 ### ThemeManager
 Správca tém (svetlá/tmavá).
 
+#### Vlastnosti
+- `themeToggle` - Referencia na DOM element pre prepínanie témy
+- `currentTheme` - Aktuálna téma ('light' alebo 'dark')
+
 #### Metódy
-- `toggleTheme()` - Prepne medzi svetlou a tmavou témou
+- `constructor()` - Inicializuje správcu tém
+- `initTheme()` - Inicializuje tému podľa systémových preferencií
+- `initThemeToggle()` - Inicializuje prepínač témy
 - `getCurrentTheme()` - Vráti aktuálnu tému
 - `setTheme(theme)` - Nastaví konkrétnu tému
+- `toggleTheme()` - Prepne medzi svetlou a tmavou témou
+- `applyTheme(isDark)` - Aplikuje tému a vráti príslušné farby
+- `getThemeColors(theme)` - Vráti farebné nastavenia pre danú tému
 
 ## Wrappery pre grafy
 
@@ -76,8 +81,19 @@ Wrapper pre ApexCharts knižnicu.
 ```javascript
 // Inicializácia manažérov
 const dataManager = new DataManager();
-const colorManager = new ColorManager();
 const themeManager = new ThemeManager();
+
+// Práca s dátami
+dataManager.addDataset('Nové dáta', [1,2,3,4], '#FF0000');
+const currentData = dataManager.getCurrentData();
+
+// Práca s farbami
+dataManager.setPalette('cool');
+const colors = dataManager.getColors();
+
+// Práca s témami
+const currentTheme = themeManager.getCurrentTheme();
+themeManager.toggleTheme();
 
 // Vytvorenie grafov
 const chartJS = new ChartJSWrapper('chartjs', dataManager, themeManager);
