@@ -1,5 +1,18 @@
 # Zoznam zmien
 
+## [2024-01-21]
+
+### Pridané
+- Implementovaný `ApexChartsWrapper` pre lepšiu integráciu ApexCharts
+- Rozšírená podpora pre rôzne typy grafov v ApexCharts
+- Pridaná konfigurácia pre gradienty a vyhladzovanie v ApexCharts
+- Lepšia synchronizácia tém medzi Chart.js a ApexCharts
+
+### Zmenené
+- Aktualizovaná štruktúra priečinkov pre lepšiu organizáciu
+- Vylepšená dokumentácia wrapperov
+- Optimalizované načítavanie skriptov v index.html
+
 ## [2024-01-20]
 
 ### Pridané

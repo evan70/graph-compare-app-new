@@ -1,21 +1,29 @@
 # Architektúra aplikácie
 
-## Prehľad
-Aplikácia používa modulárnu architektúru založenú na manažéroch (Managers) a wrapperoch (Wrappers) pre lepšiu organizáciu kódu a jednoduchšiu údržbu.
+## Štruktúra priečinkov
+```
+grafy-2024-new/
+├── js/
+│   ├── charts/          # Wrappery pre grafové knižnice
+│   │   ├── ChartJSWrapper.js
+│   │   └── ApexChartsWrapper.js
+│   ├── managers/        # Manažérske triedy
+│   │   ├── DataManager.js
+│   │   ├── ThemeManager.js
+│   │   └── ColorManager.js
+│   └── main.js         # Hlavný aplikačný súbor
+├── css/
+├── assets/
+└── index.html
+```
 
-## Vrstvy aplikácie
-
-### 1. Manažérska vrstva
-- Zodpovedná za správu stavu aplikácie
-- Obsahuje DataManager, ColorManager a ThemeManager
-- Poskytuje jednotné rozhranie pre prácu s dátami a konfiguráciou
-
-### 2. Wrapper vrstva
+## Wrapper vrstva
 - Abstrahuje prácu s externými knižnicami (Chart.js, ApexCharts)
-- Zjednocuje API pre rôzne typy grafov
-- Zjednodušuje výmenu grafových knižníc
+- Poskytuje jednotné rozhranie pre rôzne typy grafov
+- Zabezpečuje konzistentnú prácu s témami a dátami
+- Zjednodušuje konfiguráciu a aktualizáciu grafov
 
-### 3. Prezentačná vrstva
+## Prezentačná vrstva
 - HTML štruktúra
 - CSS štýly
 - Responzívny dizajn

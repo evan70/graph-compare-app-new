@@ -49,14 +49,27 @@ Wrapper pre Chart.js knižnicu.
 Wrapper pre ApexCharts knižnicu.
 
 #### Vlastnosti
-- `options` - Konfiguračné nastavenia grafu
+- `container` - DOM element pre graf
+- `dataManager` - Inštancia DataManager pre správu dát
+- `themeManager` - Inštancia ThemeManager pre správu tém
 - `chart` - Inštancia ApexCharts
+- `options` - Konfiguračné nastavenia grafu
 
 #### Metódy
-- `init()` - Inicializuje graf
-- `getInitialConfig()` - Vráti základnú konfiguráciu
-- `updateOptions(newOptions)` - Aktualizuje nastavenia
+- `constructor(containerId, dataManager, themeManager)` - Inicializuje wrapper
+- `init()` - Inicializuje graf s predvolenými nastaveniami
+- `getInitialConfig()` - Vráti základnú konfiguráciu grafu
 - `updateData(newData)` - Aktualizuje dáta grafu
+- `updateOptions(newOptions)` - Aktualizuje nastavenia grafu
+- `destroy()` - Zruší graf a uvoľní resources
+
+#### Konfigurácia
+```javascript
+{
+    useGradient: false,  // Použitie gradientov vo výplni
+    useSmoothing: true   // Vyhladzovanie čiar v grafe
+}
+```
 
 ## Použitie
 
