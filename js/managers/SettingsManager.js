@@ -39,14 +39,19 @@ class SettingsManager {
             });
         });
 
-        // Color palette select
-        const paletteSelect = document.getElementById('color-palette');
-        if (paletteSelect) {
-            paletteSelect.value = this.settings.colorPalette;
-            paletteSelect.addEventListener('change', (e) => {
-                this.updateSetting('colorPalette', e.target.value);
+        // Color palette selection
+        const paletteOptions = document.querySelectorAll('.palette-option');
+        paletteOptions.forEach(option => {
+            if (option.dataset.value === this.settings.colorPalette) {
+                option.classList.add('active');
+            }
+            
+            option.addEventListener('click', () => {
+                paletteOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                this.updateSetting('colorPalette', option.dataset.value);
             });
-        }
+        });
 
         // Toggle controls
         this.initToggle('gradient-toggle', 'useGradient');

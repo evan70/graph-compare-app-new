@@ -16,19 +16,14 @@
                 <span class="logo-text">Grafy 2024</span>
             </div>
             
-            <!-- Pridané tlačidlo pre mobilné menu -->
             <button class="mobile-menu-btn" aria-label="Menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
-
+            
             <div class="nav-menu">
                 <button class="theme-toggle" aria-label="Prepnúť tému">
-                    <i class="fas fa-sun light-icon"></i>
-                    <i class="fas fa-moon dark-icon"></i>
+                    <i class="fas fa-sun"></i>
                 </button>
-                <a href="#" class="nav-link active">Domov</a>
-                <a href="#" class="nav-link">Štatistiky</a>
-                <a href="#" class="nav-link">Nastavenia</a>
             </div>
         </div>
     </nav>
@@ -38,55 +33,117 @@
             <div class="settings-header">
                 <h2>Nastavenia grafov</h2>
                 <button class="settings-toggle" aria-label="Zobraziť/skryť nastavenia">
-                    <i class="fas fa-cog"></i>
+                    <i class="fas fa-chevron-down"></i>
                 </button>
             </div>
             <div class="settings-content">
                 <!-- Typ grafu -->
                 <div class="settings-group">
-                    <h3>Typ grafu</h3>
+                    <div class="settings-group-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Typ grafu</h3>
+                    </div>
                     <div class="radio-group">
-                        <label>
+                        <label class="radio-label">
                             <input type="radio" name="chartType" value="line" checked>
-                            Čiarový
+                            <span class="radio-text">
+                                <i class="fas fa-chart-line"></i>
+                                Čiarový
+                            </span>
                         </label>
-                        <label>
+                        <label class="radio-label">
                             <input type="radio" name="chartType" value="bar">
-                            Stĺpcový
+                            <span class="radio-text">
+                                <i class="fas fa-chart-bar"></i>
+                                Stĺpcový
+                            </span>
                         </label>
-                        <label>
+                        <label class="radio-label">
                             <input type="radio" name="chartType" value="area">
-                            Plošný
+                            <span class="radio-text">
+                                <i class="fas fa-chart-area"></i>
+                                Plošný
+                            </span>
                         </label>
                     </div>
                 </div>
 
                 <!-- Farebná paleta -->
                 <div class="settings-group">
-                    <h3>Farebná paleta</h3>
-                    <select id="color-palette" class="settings-select">
-                        <option value="default">Predvolená</option>
-                        <option value="dark">Tmavá</option>
-                        <option value="pastel">Pastelová</option>
-                        <option value="neon">Neónová</option>
-                    </select>
+                    <div class="settings-group-header">
+                        <i class="fas fa-palette"></i>
+                        <h3>Farebná paleta</h3>
+                    </div>
+                    <div class="palette-select">
+                        <div class="palette-option" data-value="default">
+                            <div class="palette-preview">
+                                <span style="background: #4e73df"></span>
+                                <span style="background: #1cc88a"></span>
+                                <span style="background: #36b9cc"></span>
+                                <span style="background: #f6c23e"></span>
+                            </div>
+                            <span class="palette-name">Predvolená</span>
+                        </div>
+                        <div class="palette-option" data-value="dark">
+                            <div class="palette-preview">
+                                <span style="background: #2c3e50"></span>
+                                <span style="background: #e74c3c"></span>
+                                <span style="background: #3498db"></span>
+                                <span style="background: #2ecc71"></span>
+                            </div>
+                            <span class="palette-name">Tmavá</span>
+                        </div>
+                        <div class="palette-option" data-value="pastel">
+                            <div class="palette-preview">
+                                <span style="background: #ff9999"></span>
+                                <span style="background: #99ff99"></span>
+                                <span style="background: #99ccff"></span>
+                                <span style="background: #ffcc99"></span>
+                            </div>
+                            <span class="palette-name">Pastelová</span>
+                        </div>
+                        <div class="palette-option" data-value="neon">
+                            <div class="palette-preview">
+                                <span style="background: #00ff00"></span>
+                                <span style="background: #ff00ff"></span>
+                                <span style="background: #00ffff"></span>
+                                <span style="background: #ffff00"></span>
+                            </div>
+                            <span class="palette-name">Neónová</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Prepínače -->
+                <!-- Vizuálne nastavenia -->
                 <div class="settings-group">
-                    <h3>Vizuálne efekty</h3>
+                    <div class="settings-group-header">
+                        <i class="fas fa-sliders-h"></i>
+                        <h3>Vizuálne nastavenia</h3>
+                    </div>
                     <div class="toggle-group">
-                        <label class="toggle-label">
-                            <input type="checkbox" id="gradient-toggle" class="toggle-input">
-                            <span class="toggle-text">Gradienty</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="gradient-toggle" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">
+                                <i class="fas fa-fill-drip"></i>
+                                Gradienty
+                            </span>
                         </label>
-                        <label class="toggle-label">
-                            <input type="checkbox" id="smooth-toggle" class="toggle-input">
-                            <span class="toggle-text">Vyhladzovanie</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="smooth-toggle" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">
+                                <i class="fas fa-wave-square"></i>
+                                Vyhladzovanie
+                            </span>
                         </label>
-                        <label class="toggle-label">
-                            <input type="checkbox" id="legend-toggle" class="toggle-input">
-                            <span class="toggle-text">Legenda</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="legend-toggle" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">
+                                <i class="fas fa-list"></i>
+                                Legenda
+                            </span>
                         </label>
                     </div>
                 </div>
@@ -94,7 +151,6 @@
         </div>
 
         <div class="charts-container">
-            <!-- Existujúce grafy -->
             <div class="chart-box">
                 <div class="chart-header">
                     <h2>Chart.js Graf</h2>
@@ -113,39 +169,34 @@
                 </div>
                 <div id="apex"></div>
             </div>
+        </div>
 
-            <!-- Nová tabuľka pre dáta -->
-            <div class="data-table-container">
-                <div class="table-header">
-                    <h2>Data Editor</h2>
-                    <div class="table-actions">
-                        <button id="addDatasetBtn" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Add Dataset
-                        </button>
-                        <button id="addColumnBtn" class="btn btn-secondary">
-                            <i class="fas fa-columns"></i> Add Column
-                        </button>
-                    </div>
+        <div class="table-container">
+            <div class="table-header">
+                <h2>Dátová tabuľka</h2>
+                <div class="table-actions">
+                    <button id="addDatasetBtn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Pridať dataset
+                    </button>
+                    <button id="addColumnBtn" class="btn btn-secondary">
+                        <i class="fas fa-columns"></i> Pridať stĺpec
+                    </button>
                 </div>
-                <div class="table-wrapper">
-                    <table id="dataTable" class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Dataset</th>
-                                <th>Color</th>
-                                <!-- Labels budú dynamicky generované -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Dáta budú dynamicky generované -->
-                        </tbody>
-                    </table>
-                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="dataTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Dataset</th>
+                            <th>Farba</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <!-- Pridáme fullscreen overlay -->
     <div class="fullscreen-overlay">
         <div class="fullscreen-graf-container">
             <button class="fullscreen-close-btn" aria-label="Zavrieť fullscreen">
@@ -163,7 +214,7 @@
     <script src="js/managers/ThemeManager.js"></script>
     <script src="js/managers/NavigationManager.js"></script>
     <script src="js/managers/FullscreenManager.js"></script>
-    <script src="js/managers/SettingsManager.js"></script>  <!-- Pridaný SettingsManager -->
+    <script src="js/managers/SettingsManager.js"></script>
     <script src="js/managers/TableManager.js"></script>
 
     <!-- Wrappery -->

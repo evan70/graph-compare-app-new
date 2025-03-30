@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.1.6] - 2024-01-24
+
+### Zmenené
+- Optimalizovaný layout settings panelu
+  - Kompaktnejšie rozloženie prvkov
+  - Zmenšené medzery a padding
+  - Upravené veľkosti písma
+  - Vylepšená responzivita
+- Vylepšené zobrazenie paliet
+  - Horizontálny scrollovateľný layout
+  - Štylizovaný scrollbar
+  - Optimalizované náhľady paliet
+- Upravená štruktúra settings groups
+  - Header vždy na vrchu skupiny
+  - Lepšie vizuálne oddelenie pomocou border
+  - Konzistentné zarovnanie prvkov
+
+### Opravené
+- Opravené presahovanie grafov mimo chart-box
+  - Správne flexbox nastavenia
+  - Fixná výška headera
+  - Lepšie škálovanie grafových komponentov
+  - Optimalizovaný overflow handling
+
 ## [0.1.5] - 2024-01-24
 
 ### Zmenené
