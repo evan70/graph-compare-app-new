@@ -66,35 +66,29 @@ Správca fullscreen módu pre grafy.
 ### ChartJSWrapper
 Wrapper pre Chart.js knižnicu.
 
-#### Metódy
-- `init()` - Inicializuje graf
-- `updateData(newData)` - Aktualizuje dáta grafu
-- `updateOptions(newOptions)` - Aktualizuje nastavenia grafu
-- `destroy()` - Zruší graf a uvoľní resources
+#### Vlastnosti
+- Plná integrácia s ColorManager pre konzistentné farby
+- Automatická synchronizácia s farebnými paletami
+- Podpora pre všetky typy grafov Chart.js
 
-#### Nové metódy
-- `createGradient(color)` - Vytvorí gradient pre pozadie
-- `adjustColor(color, opacity)` - Upraví priehľadnosť farby
-- `updateColors(palette)` - Aktualizuje farby podľa zvolenej palety
+#### Metódy
+- `constructor(containerId, dataManager, themeManager, colorManager)`
+- `getInitialConfig()` - Získa počiatočnú konfiguráciu vrátane farieb z aktuálnej palety
+- `init()` - Inicializuje graf s konzistentnými farbami
+- `updateColors(colors)` - Aktualizuje farby datasetu podľa aktuálnej palety
 
 ### ApexChartsWrapper
 Wrapper pre ApexCharts knižnicu.
 
 #### Vlastnosti
-- `container` - DOM element pre graf
-- `dataManager` - Inštancia DataManager pre správu dát
-- `themeManager` - Inštancia ThemeManager pre správu tém
-- `chart` - Inštancia ApexCharts
-- `options` - Konfiguračné nastavenia grafu
+- Exportuje inštanciu grafu pre fullscreen funkcionalitu
+- Plná integrácia s farebnými paletami
+- Konzistentné farby s Chart.js
 
 #### Metódy
-- `constructor(containerId, dataManager, themeManager)` - Inicializuje wrapper
-- `init()` - Inicializuje graf s predvolenými nastaveniami
-- `getInitialConfig()` - Vráti základnú konfiguráciu grafu
-- `updateData(newData)` - Aktualizuje dáta grafu
-- `updateOptions(newOptions)` - Aktualizuje nastavenia grafu
-- `destroy()` - Zruší graf a uvoľní resources
-- `getInitialConfig()` - Získa počiatočnú konfiguráciu
+- `constructor(containerId, dataManager, themeManager, colorManager)`
+- `init()` - Inicializuje graf a exportuje inštanciu do window.apexChart
+- `updateColors(colors)` - Synchronizuje farby s aktuálnou paletou
 
 #### Vylepšené metódy
 - `updateData(newData)` - Synchronizovaná aktualizácia dát a labels

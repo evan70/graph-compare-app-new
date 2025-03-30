@@ -1,184 +1,185 @@
 class FullscreenManager {
-    constructor(themeManager, dataManager) {  // pridaný dataManager parameter
+    constructor(themeManager, dataManager, colorManager) {
         this.themeManager = themeManager;
-        this.dataManager = dataManager;       // pridané
-        this.fullscreenOverlay = document.querySelector('.fullscreen-overlay');
-        this.fullscreenContainer = document.querySelector('.fullscreen-graf-container');
-        this.closeFullscreenBtn = document.querySelector('.fullscreen-close-btn');
-        this.fullscreenChart = null;
+        this.dataManager = dataManager;
+        this.colorManager = colorManager;
+        
+        this.overlay = document.querySelector('.fullscreen-overlay');
+        this.container = document.querySelector('.fullscreen-graf-container');
+        this.closeBtn = document.querySelector('.fullscreen-close-btn');
+        this.fullscreenBtns = document.querySelectorAll('.fullscreen-btn');
+        
+        this.currentChart = null;
+        this.originalChartInstance = null;
+        this.chartType = null;
         
         this.initEventListeners();
     }
 
     initEventListeners() {
-        // Inicializácia tlačidiel pre fullscreen
-        document.querySelectorAll('.fullscreen-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const grafType = e.currentTarget.dataset.graf;
-                this.openFullscreen(grafType);
-            });
-        });
-
-        // Close button handler
-        this.closeFullscreenBtn.addEventListener('click', () => {
-            this.closeFullscreen();
-        });
-
-        // ESC key handler
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isFullscreenActive()) {
-                this.closeFullscreen();
+            if (e.key === 'Escape' && this.isActive()) {
+                this.exitFullscreen();
             }
         });
-    }
 
-    openFullscreen(grafType) {
-        if (grafType === 'chartjs') {
-            this.openChartJSFullscreen();
-        } else if (grafType === 'apex') {
-            this.openApexFullscreen();
+        if (this.closeBtn) {
+            this.closeBtn.addEventListener('click', () => this.exitFullscreen());
         }
+
+        this.fullscreenBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const chartId = btn.getAttribute('data-graf');
+                if (chartId === 'chartjs') {
+                    const chartCanvas = document.getElementById(chartId);
+                    if (chartCanvas) {
+                        const chartInstance = Chart.getChart(chartCanvas);
+                        if (chartInstance) {
+                            this.enterFullscreen(chartId, chartInstance, 'chartjs');
+                        }
+                    }
+                } else if (chartId === 'apex') {
+                    const chartElement = document.getElementById(chartId);
+                    if (chartElement && window.apexChart) {
+                        this.enterFullscreen(chartId, window.apexChart, 'apex');
+                    } else {
+                        console.error('ApexChart instance not found');
+                    }
+                }
+            });
+        });
     }
 
-    openChartJSFullscreen() {
-        // Vyčistíme container
-        this.fullscreenContainer.innerHTML = '';
+    enterFullscreen(chartId, chartInstance, type) {
+        if (!this.overlay || !this.container) return;
         
-        // Vytvoríme canvas
-        const canvas = document.createElement('canvas');
-        canvas.id = 'fullscreen-chartjs';
-        this.fullscreenContainer.appendChild(canvas);
-        
-        // Aktivujeme fullscreen
-        this.activateFullscreen();
-
-        // Vytvoríme nový graf
-        const ctx = canvas.getContext('2d');
-        const isDarkTheme = this.themeManager.getCurrentTheme() === 'dark';
-        const textColor = isDarkTheme ? '#e2e5ec' : '#666';
-        const gridColor = isDarkTheme ? '#2d3139' : '#ddd';
-
-        // Tu môžete pridať konfiguráciu pre ChartJS
-        const chartConfig = this.getChartJSConfig(textColor, gridColor);
-        this.fullscreenChart = new Chart(ctx, chartConfig);
-    }
-
-    openApexFullscreen() {
-        const sourceChart = document.getElementById('apex');
-        const chartBox = sourceChart.closest('.chart-box');
-        const chartHeader = chartBox.querySelector('.chart-header').cloneNode(true);
-        
-        // Odstránime fullscreen tlačidlo z klonovaného headeru
-        const fullscreenBtn = chartHeader.querySelector('.fullscreen-btn');
-        if (fullscreenBtn) {
-            fullscreenBtn.remove();
-        }
-        
-        // Vyčistíme container
-        this.fullscreenContainer.innerHTML = '';
-        
-        // Pridáme header a vytvoríme nový container pre graf
-        this.fullscreenContainer.appendChild(chartHeader);
-        const newChartContainer = document.createElement('div');
-        newChartContainer.id = 'fullscreen-apex';
-        newChartContainer.style.width = '100%';
-        newChartContainer.style.height = 'calc(100% - 50px)';
-        this.fullscreenContainer.appendChild(newChartContainer);
-
-        // Aktivujeme fullscreen
-        this.activateFullscreen();
-
-        // Vytvoríme a renderujeme nový ApexChart
-        const apexConfig = this.getApexConfig();
-        this.fullscreenChart = new ApexCharts(
-            document.getElementById('fullscreen-apex'),
-            apexConfig
-        );
-        
-        this.fullscreenChart.render();
-    }
-
-    closeFullscreen() {
-        if (this.fullscreenChart) {
-            this.fullscreenChart.destroy();
-            this.fullscreenChart = null;
-        }
-        this.fullscreenOverlay.classList.remove('active');
-        document.body.classList.remove('fullscreen-active');
-        this.fullscreenContainer.innerHTML = '';
-    }
-
-    activateFullscreen() {
-        this.fullscreenOverlay.classList.add('active');
+        this.originalChartInstance = chartInstance;
+        this.chartType = type;
+        this.overlay.classList.add('active');
         document.body.classList.add('fullscreen-active');
-    }
-
-    isFullscreenActive() {
-        return this.fullscreenOverlay.classList.contains('active');
-    }
-
-    getChartJSConfig(textColor, gridColor) {
-        const data = this.dataManager.getCurrentData();  // získame aktuálne dáta
         
+        if (type === 'chartjs') {
+            const canvas = document.createElement('canvas');
+            canvas.id = 'fullscreen-chart';
+            this.container.appendChild(canvas);
+            const fullscreenConfig = this.createChartJSConfig(chartInstance);
+            this.currentChart = new Chart(canvas, fullscreenConfig);
+        } else if (type === 'apex') {
+            const div = document.createElement('div');
+            div.id = 'fullscreen-chart';
+            this.container.appendChild(div);
+            const fullscreenConfig = this.createApexConfig(chartInstance);
+            this.currentChart = new ApexCharts(div, fullscreenConfig);
+            this.currentChart.render();
+        }
+    }
+
+    createChartJSConfig(originalChart) {
+        const currentData = this.dataManager.getCurrentData();
+        const currentColors = this.colorManager.getCurrentPalette();
+        const themeConfig = this.themeManager.getThemeConfig();
+
         return {
-            type: 'line',
+            type: originalChart.config.type,
             data: {
-                labels: data.labels,
-                datasets: data.datasets.map(dataset => ({
-                    label: dataset.label,
-                    data: dataset.data,
-                    borderColor: dataset.borderColor,
-                    tension: 0.4
+                labels: currentData.labels,
+                datasets: currentData.datasets.map((dataset, index) => ({
+                    ...dataset,
+                    borderColor: currentColors[index % currentColors.length],
+                    backgroundColor: currentColors[index % currentColors.length]
                 }))
             },
             options: {
-                responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { color: textColor }
-                    }
-                },
+                responsive: true,
+                animation: { duration: 0 },
                 scales: {
                     x: {
-                        grid: { color: gridColor },
-                        ticks: { color: textColor }
+                        grid: { color: themeConfig.colors.border },
+                        ticks: { color: themeConfig.colors.text }
                     },
                     y: {
-                        grid: { color: gridColor },
-                        ticks: { color: textColor }
+                        grid: { color: themeConfig.colors.border },
+                        ticks: { color: themeConfig.colors.text }
                     }
                 }
             }
         };
     }
 
-    getApexConfig() {
-        const data = this.dataManager.getCurrentData();  // získame aktuálne dáta
-        
+    createApexConfig(originalChart) {
+        const currentData = this.dataManager.getCurrentData();
+        const currentColors = this.colorManager.getCurrentPalette();
+        const themeConfig = this.themeManager.getThemeConfig();
+
         return {
-            chart: {
-                type: 'line',
-                height: '100%',
-                width: '100%',
-                animations: {
-                    enabled: true
-                },
-                toolbar: {
-                    show: true
-                }
-            },
-            series: data.datasets.map(dataset => ({
+            series: currentData.datasets.map(dataset => ({
                 name: dataset.label,
                 data: dataset.data
             })),
+            colors: currentColors,
+            chart: {
+                type: 'line',
+                height: '100%',
+                background: 'transparent'
+            },
             xaxis: {
-                categories: data.labels
+                categories: currentData.labels,
+                labels: {
+                    style: { colors: themeConfig.colors.text }
+                }
+            },
+            yaxis: {
+                labels: {
+                    style: { colors: themeConfig.colors.text }
+                }
+            },
+            grid: {
+                borderColor: themeConfig.colors.border
             }
         };
     }
+
+    exitFullscreen() {
+        if (!this.isActive()) return;
+        
+        if (this.currentChart) {
+            if (this.chartType === 'chartjs') {
+                this.currentChart.destroy();
+            } else if (this.chartType === 'apex') {
+                this.currentChart.destroy();
+            }
+            this.currentChart = null;
+        }
+        
+        this.container.innerHTML = '';
+        this.overlay.classList.remove('active');
+        document.body.classList.remove('fullscreen-active');
+    }
+
+    isActive() {
+        return this.overlay?.classList.contains('active');
+    }
+
+    updateColors() {
+        if (!this.currentChart) return;
+        
+        const currentColors = this.colorManager.getCurrentPalette();
+        
+        if (this.chartType === 'chartjs') {
+            this.currentChart.data.datasets.forEach((dataset, index) => {
+                dataset.borderColor = currentColors[index % currentColors.length];
+                dataset.backgroundColor = currentColors[index % currentColors.length];
+            });
+            this.currentChart.update();
+        } else if (this.chartType === 'apex') {
+            this.currentChart.updateOptions({
+                colors: currentColors
+            });
+        }
+    }
 }
 
-// Export pre prehliadač
-window.FullscreenManager = FullscreenManager;
+if (typeof window !== 'undefined') {
+    window.FullscreenManager = FullscreenManager;
+}

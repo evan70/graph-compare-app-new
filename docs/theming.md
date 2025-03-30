@@ -39,6 +39,34 @@ colorManager.addCustomPalette('myPalette', [
 ]);
 ```
 
+## Použitie farebných paliet
+
+### Konzistencia medzi grafmi
+Všetky grafy (Chart.js aj ApexCharts) používajú rovnaké farby z aktívnej palety:
+- Farby sú aplikované konzistentne na všetky datasety
+- Automatická synchronizácia pri zmene palety
+- Zachovanie farieb vo fullscreen móde
+
+### Implementácia v wrapperoch
+```javascript
+// ChartJSWrapper
+updateColors(colors) {
+    this.chart.data.datasets.forEach((dataset, index) => {
+        const color = colors[index % colors.length];
+        dataset.borderColor = color;
+        dataset.backgroundColor = color;
+    });
+    this.chart.update();
+}
+
+// ApexChartsWrapper
+updateColors(colors) {
+    this.chart.updateOptions({
+        colors: colors
+    });
+}
+```
+
 ## Témy
 
 ### Svetlá téma

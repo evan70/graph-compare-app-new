@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.1.4] - 2024-01-24
+
+### Opravené
+- Zjednotené farby medzi všetkými grafmi
+  - Chart.js na hlavnej stránke
+  - Chart.js vo fullscreen móde
+  - ApexCharts v oboch módoch
+  - Konzistentné použitie farebných paliet
+- Opravená funkcionalita fullscreen tlačidla pre ApexCharts
+  - Správne exportovanie inštancie grafu
+  - Lepšia integrácia s FullscreenManager
+
+### Zmenené
+- Vylepšená implementácia ChartJSWrapper
+  - Zjednodušená konfigurácia farieb
+  - Odstránené nadbytočné nastavenia priehľadnosti
+  - Optimalizovaná metóda updateColors
+- Aktualizovaná integrácia s ColorManager
+  - Efektívnejšie použitie farebných paliet
+  - Konzistentné mapovanie farieb na datasety
+
 ## [0.1.3] - 2024-01-24
 
 ### Opravené

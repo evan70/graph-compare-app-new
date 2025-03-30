@@ -1,5 +1,8 @@
 class ThemeManager {
     constructor(settingsManager) {
+        if (!settingsManager) {
+            throw new Error('SettingsManager is required');
+        }
         this.settingsManager = settingsManager;
         this.currentTheme = this.settingsManager.getTheme() || 'light';
         this.listeners = [];

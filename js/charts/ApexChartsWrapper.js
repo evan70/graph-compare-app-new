@@ -1,21 +1,26 @@
 class ApexChartsWrapper {
-    constructor(containerId, dataManager, themeManager) {
+    constructor(containerId, dataManager, themeManager, colorManager) {
         this.container = document.getElementById(containerId);
         this.dataManager = dataManager;
         this.themeManager = themeManager;
+        this.colorManager = colorManager;
         this.chart = null;
         this.options = {
             useGradient: false,
             useSmoothing: true
         };
+        
+        if (this.colorManager) {
+            this.colorManager.addListener((colors) => this.updateColors(colors));
+        }
     }
 
     init() {
         const data = this.dataManager.getCurrentData();
-        const colors = this.dataManager.getColors();
-        const isDark = this.themeManager.getCurrentTheme() === 'dark';
+        const colors = this.colorManager.getCurrentPalette();
+        const themeConfig = this.themeManager.getThemeConfig();
 
-        const config = {
+        const options = {
             series: data.datasets.map(dataset => ({
                 name: dataset.label,
                 data: dataset.data
@@ -23,42 +28,42 @@ class ApexChartsWrapper {
             colors: colors,
             chart: {
                 type: 'line',
-                height: 350,
-                background: isDark ? '#1a1d24' : '#ffffff',
-                foreColor: isDark ? '#e2e5ec' : '#666666'
+                height: '100%',
+                background: 'transparent'
             },
             xaxis: {
-                categories: data.labels
+                categories: data.labels,
+                labels: {
+                    style: {
+                        colors: themeConfig.colors.text
+                    }
+                }
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: themeConfig.colors.text
+                    }
+                }
             },
             grid: {
-                borderColor: isDark ? '#2d3139' : '#ddd',
-                strokeDashArray: 4
-            },
-            theme: {
-                mode: isDark ? 'dark' : 'light'
-            },
-            legend: {
-                position: 'bottom',
-                horizontalAlign: 'center'
-            },
-            stroke: {
-                curve: this.options.useSmoothing ? 'smooth' : 'straight',
-                width: 2
+                borderColor: themeConfig.colors.border
             }
         };
 
-        this.chart = new ApexCharts(this.container, config);
+        this.chart = new ApexCharts(this.container, options);
         this.chart.render();
+        
+        // Exportujeme inštanciu do window objektu
+        window.apexChart = this.chart;
     }
 
-    updateColors(palette) {
+    updateColors(colors) {
         if (!this.chart) return;
-        
-        const colors = this.dataManager.getColors();
         
         this.chart.updateOptions({
             colors: colors
-        }, false, true);
+        });
     }
 
     updateData(newData) {

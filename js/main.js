@@ -1,73 +1,41 @@
 // Hlavná aplikácia
 const ChartManager = (function() {
     function ChartManager() {
-        // Najprv inicializujeme SettingsManager
-        this.settingsManager = new window.SettingsManager();
-        
-        // Potom ThemeManager s referenciou na SettingsManager
-        this.themeManager = new window.ThemeManager(this.settingsManager);
-        
-        // Ostatné manažéry
-        this.dataManager = new window.DataManager();
-        this.navigationManager = new window.NavigationManager();
-        this.fullscreenManager = new window.FullscreenManager(
-            this.themeManager,
-            this.dataManager
+        // Inicializácia manažérov v správnom poradí
+        this.settingsManager = new SettingsManager();
+        this.colorManager = new ColorManager(this.settingsManager);
+        this.dataManager = new DataManager();
+        this.themeManager = new ThemeManager(this.settingsManager);
+        this.fullscreenManager = new FullscreenManager(
+            this.themeManager, 
+            this.dataManager,
+            this.colorManager
         );
         
-        this.chartjs = new window.ChartJSWrapper('chartjs', this.dataManager, this.themeManager);
-        this.apex = new window.ApexChartsWrapper('apex', this.dataManager, this.themeManager);
+        // Pridanie listenera na zmeny palety
+        this.colorManager.addListener(() => {
+            if (this.fullscreenManager.isActive()) {
+                this.fullscreenManager.updateColors();
+            }
+        });
+
+        // Inicializácia wrapperov
+        this.chartjs = new ChartJSWrapper('chartjs', this.dataManager, this.themeManager, this.colorManager);
+        this.apex = new ApexChartsWrapper('apex', this.dataManager, this.themeManager, this.colorManager);
 
         // Inicializácia grafov
         this.chartjs.init();
         this.apex.init();
 
-        // Register listeners
-        this.dataManager.addListener((data) => {
-            this.chartjs.updateData(data);
-            this.apex.updateData(data);
-        });
-
-        this.themeManager.addListener((themeConfig) => {
-            this.chartjs.updateOptions(themeConfig);
-            this.apex.updateOptions(themeConfig);
-        });
-
-        // Pridané listeners pre settings
-        this.initSettingsListeners();
+        // Nastavenie event listenera pre select palety
+        const paletteSelect = document.getElementById('color-palette');
+        if (paletteSelect) {
+            paletteSelect.value = this.colorManager.getCurrentPalette();
+            paletteSelect.addEventListener('change', (e) => {
+                this.colorManager.setPalette(e.target.value);
+            });
+        }
     }
-
-    ChartManager.prototype.initSettingsListeners = function() {
-        // Listener pre zmenu typu grafu
-        this.settingsManager.subscribe('chartType', (type) => {
-            this.chartjs.setChartType(type);
-            this.apex.setChartType(type);
-        });
-
-        // Listener pre zmenu farebnej palety
-        this.settingsManager.subscribe('colorPalette', (palette) => {
-            this.chartjs.updateColors(palette);
-            this.apex.updateColors(palette);
-        });
-
-        // Listener pre gradient
-        this.settingsManager.subscribe('useGradient', (enabled) => {
-            this.chartjs.toggleGradient(enabled);
-            this.apex.toggleGradient(enabled);
-        });
-
-        // Listener pre vyhladzovanie
-        this.settingsManager.subscribe('useSmoothing', (enabled) => {
-            this.chartjs.toggleSmoothing(enabled);
-            this.apex.toggleSmoothing(enabled);
-        });
-
-        // Listener pre legendu
-        this.settingsManager.subscribe('showLegend', (visible) => {
-            this.chartjs.toggleLegend(visible);
-            this.apex.toggleLegend(visible);
-        });
-    };
 
     return ChartManager;
 })();
@@ -76,7 +44,3 @@ const ChartManager = (function() {
 document.addEventListener('DOMContentLoaded', () => {
     window.chartManager = new ChartManager();
 });
-
-// Odstráňme duplicitnú inicializáciu
-// const settingsManager = new SettingsManager();
-// const themeManager = new ThemeManager(settingsManager);

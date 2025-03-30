@@ -1,5 +1,6 @@
 class ColorManager {
-    constructor() {
+    constructor(settingsManager) {
+        this.settingsManager = settingsManager;
         this.colorPalettes = {
             default: [
                 '#4e73df', '#e74a3b', '#1cc88a', '#f6c23e', '#36b9cc',
@@ -18,30 +19,49 @@ class ColorManager {
                 '#1EFFFF', '#FF8B1E', '#1EFF8B', '#8B1EFF', '#FF1E8B'
             ]
         };
-        this.currentPalette = 'default';
-    }
+        
+        this.currentPalette = this.settingsManager.settings.colorPalette || 'default';
+        this.listeners = [];
 
-    getPalette(name) {
-        return this.colorPalettes[name] || this.colorPalettes.default;
+        this.settingsManager.subscribe('colorPalette', (palette) => {
+            if (palette !== this.currentPalette) {
+                this.currentPalette = palette;
+                this.notifyListeners(this.getCurrentPalette());
+            }
+        });
     }
 
     getCurrentPalette() {
-        return this.getPalette(this.currentPalette);
+        return this.colorPalettes[this.currentPalette];
+    }
+
+    getCurrentPaletteName() {
+        return this.currentPalette;
     }
 
     setPalette(name) {
-        if (this.colorPalettes[name]) {
+        if (this.colorPalettes[name] && name !== this.currentPalette) {
             this.currentPalette = name;
+            this.settingsManager.updateSetting('colorPalette', name, true);
+            this.notifyListeners(this.getCurrentPalette());
             return true;
         }
         return false;
     }
 
-    addCustomPalette(name, colors) {
-        if (Array.isArray(colors) && colors.length > 0) {
-            this.colorPalettes[name] = colors;
-            return true;
-        }
-        return false;
+    addListener(callback) {
+        this.listeners.push(callback);
     }
+
+    removeListener(callback) {
+        this.listeners = this.listeners.filter(l => l !== callback);
+    }
+
+    notifyListeners(colors) {
+        this.listeners.forEach(callback => callback(colors));
+    }
+}
+
+if (typeof window !== 'undefined') {
+    window.ColorManager = ColorManager;
 }
